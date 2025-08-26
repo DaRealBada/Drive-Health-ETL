@@ -1,0 +1,19 @@
+0 verbose cli /usr/local/nvm/versions/node/v22.18.0/bin/node /usr/local/nvm/versions/node/v22.18.0/bin/npm
+1 info using npm@11.5.2
+2 info using node@v22.18.0
+3 silly config load:file:/usr/local/nvm/versions/node/v22.18.0/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/tolubada1/.npmrc
+5 silly config load:file:/usr/local/nvm/versions/node/v22.18.0/etc/npmrc
+6 verbose title npm view @google-cloud/pubsub description dist-tags.latest homepage version time
+7 verbose argv "view" "--json" "--" "@google-cloud/pubsub" "description" "dist-tags.latest" "homepage" "version" "time"
+8 verbose logfile logs-max:10 dir:/home/tolubada1/.npm/_logs/2025-08-26T19_30_51_215Z-
+9 verbose logfile /home/tolubada1/.npm/_logs/2025-08-26T19_30_51_215Z-debug-0.log
+10 silly logfile start cleaning logs, removing 1 files
+11 silly logfile done cleaning log files
+12 http fetch GET 200 https://registry.npmjs.org/@google-cloud%2fpubsub 236ms (cache miss)
+13 verbose cwd /home/tolubada1
+14 verbose os Linux 6.6.97+
+15 verbose node v22.18.0
+16 verbose npm  v11.5.2
+17 verbose exit 0
+18 info ok

@@ -1,0 +1,28 @@
+2025-08-26 16:51:52.756 [info] 
+
+
+
+
+2025-08-26 16:51:52.778 [info] Extension host agent started.
+2025-08-26 16:51:54.244 [info] [127.0.0.1][be33fa2f][ManagementConnection] New connection established.
+2025-08-26 16:51:54.357 [info] [127.0.0.1][78ee5280][ExtensionHostConnection] New connection established.
+2025-08-26 16:51:54.428 [info] ComputeTargetPlatform: linux-x64
+2025-08-26 16:51:55.511 [info] [127.0.0.1][78ee5280][ExtensionHostConnection] <1236> Launched Extension Host Process.
+2025-08-26 17:03:58.803 [info] [127.0.0.1][be33fa2f][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2025-08-26 17:03:59.057 [info] [127.0.0.1][78ee5280][ExtensionHostConnection] <1236> Extension Host Process exited with code: 0, signal: null.
+2025-08-26 17:03:59.925 [info] [127.0.0.1][588ad95f][ManagementConnection] New connection established.
+2025-08-26 17:03:59.988 [info] [127.0.0.1][db3672e9][ExtensionHostConnection] New connection established.
+2025-08-26 17:03:59.994 [info] [127.0.0.1][db3672e9][ExtensionHostConnection] <3563> Launched Extension Host Process.
+2025-08-26 17:41:56.329 [info] [127.0.0.1][db3672e9][ExtensionHostConnection] The client has reconnected.
+2025-08-26 17:41:56.672 [info] [127.0.0.1][588ad95f][ManagementConnection] The client has reconnected.
+2025-08-26 18:16:53.186 [info] [127.0.0.1][588ad95f][ManagementConnection] The client has disconnected gracefully, so the connection will be disposed.
+2025-08-26 18:16:53.492 [info] [127.0.0.1][db3672e9][ExtensionHostConnection] <3563> Extension Host Process exited with code: 0, signal: null.
+2025-08-26 18:16:54.214 [info] [127.0.0.1][3946ed4d][ManagementConnection] New connection established.
+2025-08-26 18:16:54.272 [info] [127.0.0.1][1d045f57][ExtensionHostConnection] New connection established.
+2025-08-26 18:16:54.284 [info] [127.0.0.1][1d045f57][ExtensionHostConnection] <6077> Launched Extension Host Process.
+2025-08-26 18:21:19.756 [info] [127.0.0.1][1d045f57][ExtensionHostConnection] The client has reconnected.
+2025-08-26 18:21:19.860 [info] [127.0.0.1][3946ed4d][ManagementConnection] The client has reconnected.
+2025-08-26 18:38:33.893 [info] [127.0.0.1][3946ed4d][ManagementConnection] The client has disconnected, will wait for reconnection 3h before disposing...
+2025-08-26 18:51:04.768 [info] [127.0.0.1][3946ed4d][ManagementConnection] Another client has connected, will shorten the wait for reconnection 5m before disposing...
+2025-08-26 18:51:04.769 [info] [127.0.0.1][1d045f57][ExtensionHostConnection] The client has reconnected.
+2025-08-26 18:54:57.844 [info] [127.0.0.1][3946ed4d][ManagementConnection] The client has reconnected.
