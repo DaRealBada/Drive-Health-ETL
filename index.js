@@ -1,28 +1,38 @@
 const express = require('express');
-// We only need the main BigQuery client
+const { v1 } = require('@google-cloud/pubsub');
 const { BigQuery } = require('@google-cloud/bigquery');
-// NEW: Import the built-in crypto library for hashing.
 const crypto = require('crypto');
+// NEW: Import the Winston logging library
+const winston = require('winston');
+
+// NEW: Create a configured logger instance that outputs JSON
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.Console(),
+  ],
+});
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// We only need the main BigQuery client instance
 const bigquery = new BigQuery();
+const pubSubClient = new v1.SubscriberClient();
 
 // Configuration from environment variables
+const SUBSCRIPTION_NAME = process.env.SUBSCRIPTION_NAME || 'etl-batch-pull-sub';
 const DATASET_ID = process.env.DATASET_ID || 'call_audits';
 const TABLE_ID = process.env.TABLE_ID || 'processed_calls';
-const AUDIT_RATE = parseFloat(process.env.AUDIT_RATE) || 1;
+const AUDIT_RATE = parseFloat(process.env.AUDIT_RATE) || 0.05;
+const MAX_MESSAGES = parseInt(process.env.MAX_MESSAGES) || 100;
 
 app.use(express.json());
 
-// Health check endpoint
 app.get('/', (req, res) => {
   res.send('ETL Service is running!');
 });
 
-// Single-message processing endpoint, triggered by Pub/Sub Push
 app.post('/process-call', async (req, res) => {
   try {
     const hashData = (data) => {
@@ -30,57 +40,91 @@ app.post('/process-call', async (req, res) => {
       const hashedData = { ...data };
       for (const field of piiFields) {
         if (hashedData[field]) {
-          const hash = crypto.createHash('sha256');
-          hash.update(hashedData[field]);
+          const hash = crypto.createHash('sha256').update(hashedData[field]);
           hashedData[field] = hash.digest('hex');
         }
       }
       return hashedData;
     };
 
-    const message = req.body.message;
-    if (!message || !message.data) {
-      console.warn('Invalid Pub/Sub message format.');
-      return res.status(400).send('Bad Request');
+    // UPDATED: Use the logger
+    logger.info('Scheduled trigger received. Pulling messages...');
+    
+    const projectId = await pubSubClient.getProjectId();
+    const formattedSubscription = `projects/${projectId}/subscriptions/${SUBSCRIPTION_NAME}`;
+    
+    const pullRequest = {
+      subscription: formattedSubscription,
+      maxMessages: MAX_MESSAGES,
+    };
+
+    const [response] = await pubSubClient.pull(pullRequest);
+    const messages = response.receivedMessages;
+
+    if (!messages || messages.length === 0) {
+      logger.info('No messages to process.');
+      return res.status(204).send();
     }
-    const callData = JSON.parse(Buffer.from(message.data, 'base64').toString());
 
-    if (!callData.call_id) {
-      console.warn('Message missing call_id, acknowledging to avoid retries.');
-      return res.status(200).send('Message acknowledged.'); 
+    logger.info('Pulled messages.', { messageCount: messages.length });
+
+    const rowsToInsert = [];
+    const ackIds = [];
+
+    for (const { message, ackId } of messages) {
+      ackIds.push(ackId);
+      try {
+        const callData = JSON.parse(Buffer.from(message.data, 'base64').toString());
+
+        if (!callData.call_id) {
+          logger.warn('Message missing call_id, skipping.', { ackId });
+          continue;
+        }
+
+        if (Math.random() < AUDIT_RATE) {
+          const hashedCallData = hashData(callData);
+          const row = {
+            call_id: callData.call_id,
+            timestamp: callData.timestamp,
+            duration: callData.duration,
+            flagged_for_audit: true,
+            processed_at: new Date().toISOString(),
+            original_metadata: JSON.stringify(hashedCallData)
+          };
+          rowsToInsert.push(row);
+        }
+      } catch (parseError) {
+        logger.error('Error parsing message, skipping.', { ackId, errorMessage: parseError.message });
+      }
     }
 
-    if (Math.random() < AUDIT_RATE) {
-      console.log(`Call ${callData.call_id} SELECTED for audit`);
-      
-      const hashedCallData = hashData(callData);
+    if (rowsToInsert.length > 0) {
+        await bigquery.dataset(DATASET_ID).table(TABLE_ID).insert(rowsToInsert);
+        logger.info('Successfully inserted rows into BigQuery.', { rowCount: rowsToInsert.length });
+    }
 
-      const rowToInsert = {
-        call_id: callData.call_id,
-        timestamp: callData.timestamp,
-        duration: callData.duration,
-        flagged_for_audit: true,
-        processed_at: new Date().toISOString(),
-        original_metadata: JSON.stringify(hashedCallData)
+    if (ackIds.length > 0) {
+      const ackRequest = {
+        subscription: formattedSubscription,
+        ackIds: ackIds,
       };
-
-      // UPDATED: Use the simple and reliable table.insert() method
-      await bigquery
-        .dataset(DATASET_ID)
-        .table(TABLE_ID)
-        .insert([rowToInsert]);
-
-      console.log(`Successfully inserted call ${callData.call_id} into BigQuery.`);
+      await pubSubClient.acknowledge(ackRequest);
+      logger.info('Acknowledged processed messages.', { ackIdCount: ackIds.length });
     }
 
-    res.status(200).send('Message processed successfully.');
-
+    res.status(200).send(`Processed ${messages.length} messages.`);
+    
   } catch (error) {
-    console.error(`Error processing message:`, error);
-    res.status(500).send('Error processing message');
+    // UPDATED: Use the logger for detailed error information
+    logger.error('Error processing batch.', { 
+      errorMessage: error.message, 
+      errorStack: error.stack 
+    });
+    res.status(500).send('Error processing batch');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  // UPDATED: Use the logger for server startup
+  logger.info(`Server running on port ${PORT}`);
 });
