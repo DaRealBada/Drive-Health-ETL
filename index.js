@@ -1,18 +1,19 @@
 const express = require('express');
-const { BigQueryWriteClient } = require('@google-cloud/bigquery-storage');
+// We only need the main BigQuery client
+const { BigQuery } = require('@google-cloud/bigquery');
 // NEW: Import the built-in crypto library for hashing.
 const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-const writeClient = new BigQueryWriteClient();
+// We only need the main BigQuery client instance
+const bigquery = new BigQuery();
 
 // Configuration from environment variables
 const DATASET_ID = process.env.DATASET_ID || 'call_audits';
 const TABLE_ID = process.env.TABLE_ID || 'processed_calls';
-const AUDIT_RATE = parseFloat(process.env.AUDIT_RATE) || 0.05;
-const PROJECT_ID = process.env.GCP_PROJECT;
+const AUDIT_RATE = parseFloat(process.env.AUDIT_RATE) || 1;
 
 app.use(express.json());
 
@@ -24,11 +25,9 @@ app.get('/', (req, res) => {
 // Single-message processing endpoint, triggered by Pub/Sub Push
 app.post('/process-call', async (req, res) => {
   try {
-    // NEW: Helper function to hash sensitive data.
     const hashData = (data) => {
       const piiFields = ['caller', 'receiver'];
       const hashedData = { ...data };
-
       for (const field of piiFields) {
         if (hashedData[field]) {
           const hash = crypto.createHash('sha256');
@@ -39,7 +38,6 @@ app.post('/process-call', async (req, res) => {
       return hashedData;
     };
 
-    // 1. DECODE the single message from the request body
     const message = req.body.message;
     if (!message || !message.data) {
       console.warn('Invalid Pub/Sub message format.');
@@ -47,38 +45,32 @@ app.post('/process-call', async (req, res) => {
     }
     const callData = JSON.parse(Buffer.from(message.data, 'base64').toString());
 
-    // 2. VALIDATE the data
     if (!callData.call_id) {
       console.warn('Message missing call_id, acknowledging to avoid retries.');
       return res.status(200).send('Message acknowledged.'); 
     }
 
-    // 3. SAMPLE the data
     if (Math.random() < AUDIT_RATE) {
       console.log(`Call ${callData.call_id} SELECTED for audit`);
       
-      // UPDATED: Hash the data before transforming it.
       const hashedCallData = hashData(callData);
 
-      // 4. TRANSFORM the data
       const rowToInsert = {
         call_id: callData.call_id,
         timestamp: callData.timestamp,
         duration: callData.duration,
         flagged_for_audit: true,
         processed_at: new Date().toISOString(),
-        // UPDATED: Store the HASHED version of the data.
         original_metadata: JSON.stringify(hashedCallData)
       };
 
-      // 5. LOAD the data using the Storage Write API
-      const tablePath = `projects/${PROJECT_ID}/datasets/${DATASET_ID}/tables/${TABLE_ID}`;
-      const writeStream = await writeClient.appendRows({ parent: tablePath });
+      // UPDATED: Use the simple and reliable table.insert() method
+      await bigquery
+        .dataset(DATASET_ID)
+        .table(TABLE_ID)
+        .insert([rowToInsert]);
 
-      await writeStream.append([rowToInsert]); 
-      await writeStream.finalize();
-
-      console.log(`Successfully streamed call ${callData.call_id} into BigQuery.`);
+      console.log(`Successfully inserted call ${callData.call_id} into BigQuery.`);
     }
 
     res.status(200).send('Message processed successfully.');
