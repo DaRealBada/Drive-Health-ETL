@@ -1,7 +1,7 @@
 // scripts/04_step_load_test.js
 // Milestone D: Step load test with autoscaling demonstration
 const { PubSub } = require('@google-cloud/pubsub');
-const { LoadTester } = require('../load-test');
+const { LoadTester } = require('../src/load-test');
 
 class StepLoadTester {
   constructor(options = {}) {

@@ -5,11 +5,13 @@ npm-debug.log*
 
 # Logs
 *.log
+_cacache/
 
 # Cache files
 .DS_Store
 .cache/
 .vscode/
+.codeoss/
 
 # Gemini and LLM related
 gemini/
@@ -17,7 +19,6 @@ gemini/
 # Cloud Shell related
 .bashrc
 .gitconfig
+.gitignore
 .profile
-
-# NPM cache from Google Cloud Shell
-_cacache/
+.bash_history
