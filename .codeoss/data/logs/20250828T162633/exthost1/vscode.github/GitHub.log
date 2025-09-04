@@ -1,4 +1,0 @@
-2025-08-28 16:26:37.967 [info] Log level: Info
-2025-08-28 16:26:53.520 [warning] [GitHubBranchProtectionProvider][updateRepositoryBranchProtection] Failed to update repository branch protection: No GitHub authentication session available.
-2025-08-28 16:35:29.715 [warning] [GitHubSourceControlHistoryItemDetailsProvider][_loadAssignableUsers] Failed to load assignable user(s) for DaRealBada/Drive-Health-ETL: Error: No GitHub authentication session available.
-2025-08-28 17:12:19.052 [warning] [GitHubBranchProtectionProvider][updateRepositoryBranchProtection] Failed to update repository branch protection: No GitHub authentication session available.
