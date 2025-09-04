@@ -28,6 +28,7 @@ A single message follows a clearly defined path from ingestion to storage:
 All incoming messages must conform to the following JSON envelope structure:
 
 | Field | Type | Required | Description |
+|---|---|---|---|
 | `envelope_version` | number | Yes | The version of the envelope schema. |
 | `event_type` | string | Yes | The type of event (e.g., "call.metadata"). |
 | `schema_version` | number | Yes | The version of the payload schema. |
@@ -44,5 +45,14 @@ The service can be configured using these environment variables:
 | Variable | Description | Default |
 |---|---|---|
 | `PORT` | The port the service will listen on. | `8080` |
+| `LOG_LEVEL` | The logging level (e.g., 'info', 'warn', 'error'). | `info` |
 | `AUDIT_RATE` | The deterministic sampling rate (0.0 to 1.0) for auditing. | `1.0` |
 | `DEFAULT_PHONE_REGION` | The default two-letter country code for E.164 phone number parsing. | `US` |
+| `MAX_BATCH_SIZE` | The number of messages to buffer before flushing to BigQuery. | `1` |
+| `MAX_BATCH_WAIT_MS` | The time in milliseconds to wait before flushing a batch. | `100` |
+| `BQ_DATASET` | The BigQuery dataset to use. | `drivehealth_dw` |
+| `BQ_TABLE` | The BigQuery table to use. | `events` |
+| `PARTITION_TTL_DAYS` | The expiration time for BigQuery partitions in days. | `365` |
+| `DLQ_SUBSCRIPTION` | The name of the Dead Letter Queue subscription. | `call-audits-dlq-sub`|
+| `MAIN_TOPIC` | The name of the main Pub/Sub topic. | `phone-call-metadata`|
+| `PARKING_LOT_TOPIC` | The name of the parking-lot Pub/Sub topic. | `phone-call-metadata-parking-lot`|

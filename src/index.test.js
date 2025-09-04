@@ -1,12 +1,8 @@
 // Import all the functions and the server we want to test
-const {
-  validateEnvelope,
-  computeIdempotencyKey,
-  shouldSample,
-  normalizePhone,
-  server // Import the server to close it later
-} = require('./index.js');
-
+const { validateEnvelope, computeIdempotencyKey } = require('./validation.js');
+const { shouldSample } = require('./sampling.js');
+const { normalizePhone } = require('./phone.js');
+const { app } = require('./app.js');
 
 describe('validateEnvelope', () => {
   const validEnvelope = {
@@ -33,7 +29,6 @@ describe('validateEnvelope', () => {
   });
 });
 
-
 describe('normalizePhone', () => {
   test('should normalize a US phone number to E.164', () => {
     expect(normalizePhone('415-555-0001', 'US')).toBe('+14155550001');
@@ -43,7 +38,6 @@ describe('normalizePhone', () => {
     expect(normalizePhone('not a phone number')).toBeNull();
   });
 });
-
 
 describe('computeIdempotencyKey', () => {
   test('should prioritize call_id', () => {
@@ -67,7 +61,6 @@ describe('computeIdempotencyKey', () => {
   });
 });
 
-
 describe('shouldSample', () => {
   test('should always return true when auditRate is 1.0', () => {
     expect(shouldSample('any-key', 1.0)).toBe(true);
@@ -87,8 +80,27 @@ describe('shouldSample', () => {
   });
 });
 
+// Server integration tests
+describe('Server Integration', () => {
+  let server;
 
-// After all tests are finished, close the server to allow Jest to exit cleanly.
-afterAll((done) => {
-  server.close(done);
+  beforeAll((done) => {
+    // Use port 0 to let the system assign an available port
+    server = app.listen(0, done);
+  }, 10000); // Increase timeout to 10 seconds
+
+  afterAll((done) => {
+    if (server) {
+      server.close(done);
+    } else {
+      done();
+    }
+  });
+
+  test('should respond to health check', async () => {
+    const request = require('supertest');
+    const response = await request(app).get('/');
+    expect(response.status).toBe(200);
+    expect(response.text).toBe('DriveHealth ETL Service is running!');
+  });
 });

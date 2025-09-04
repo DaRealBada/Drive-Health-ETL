@@ -8,19 +8,17 @@ const publisherClient = new v1.PublisherClient();
 // Configuration from environment variables
 const DLQ_SUBSCRIPTION_NAME = process.env.DLQ_SUBSCRIPTION || 'call-audits-dlq-sub';
 const MAIN_TOPIC_ID = process.env.MAIN_TOPIC || 'phone-call-metadata';
-// NEW: Add the parking-lot topic from environment variables
 const PARKING_LOT_TOPIC_ID = process.env.PARKING_LOT_TOPIC || 'phone-call-metadata-parking-lot';
 const BATCH_SIZE = parseInt(process.env.BATCH_SIZE) || 10;
+const REPLAY_DELAY_MS = parseInt(process.env.REPLAY_DELAY_MS) || 200;
 
 async function main() {
   console.log(`Starting DLQ replay job for subscription: ${DLQ_SUBSCRIPTION_NAME}`);
 
   const projectId = await subscriberClient.getProjectId();
 
-  // Format the full paths required by the v1 API
   const formattedSubscription = `projects/${projectId}/subscriptions/${DLQ_SUBSCRIPTION_NAME}`;
   const formattedTopic = `projects/${projectId}/topics/${MAIN_TOPIC_ID}`;
-  // NEW: Format the parking-lot topic path
   const formattedParkingLotTopic = `projects/${projectId}/topics/${PARKING_LOT_TOPIC_ID}`;
 
   // 1. Pull messages from the DLQ
@@ -39,15 +37,13 @@ async function main() {
   console.log(`Found ${messages.length} messages to process.`);
   const ackIds = [];
   const messagesToRepublish = [];
-  // NEW: Create a list for messages that will go to the parking lot
   const messagesToPark = [];
 
   for (const { message, ackId } of messages) {
-    // Check if the message has been replayed before
     if (message.attributes && message.attributes.replayAttempt) {
       // This message failed after a replay, send it to the parking lot
       console.log('Detected a stubborn message, sending to parking lot.');
-      // Remove the attribute so it's clean for the next consumer
+      message.attributes.dlqReason = 'Failed after replay attempt';
       delete message.attributes.replayAttempt;
       messagesToPark.push(message);
     } else {
@@ -61,17 +57,22 @@ async function main() {
     ackIds.push(ackId);
   }
 
-  // 2. Republish the messages to the main topic
+  // 2. Republish the messages to the main topic with throttling
   if (messagesToRepublish.length > 0) {
-    const publishRequest = {
-      topic: formattedTopic,
-      messages: messagesToRepublish,
-    };
-    await publisherClient.publish(publishRequest);
-    console.log(`Re-published ${messagesToRepublish.length} messages to ${MAIN_TOPIC_ID}.`);
+    console.log(`Re-publishing ${messagesToRepublish.length} messages to ${MAIN_TOPIC_ID}...`);
+    for (const message of messagesToRepublish) {
+      const publishRequest = {
+        topic: formattedTopic,
+        messages: [message],
+      };
+      await publisherClient.publish(publishRequest);
+      console.log(`- Republished message to main topic.`);
+      // Add a small delay to throttle the replay rate
+      await new Promise(resolve => setTimeout(resolve, REPLAY_DELAY_MS));
+    }
   }
   
-  // 3. NEW: Publish stubborn messages to the parking-lot topic
+  // 3. Publish stubborn messages to the parking-lot topic
   if (messagesToPark.length > 0) {
     const parkRequest = {
       topic: formattedParkingLotTopic,

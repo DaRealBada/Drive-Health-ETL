@@ -24,9 +24,18 @@ let pendingBatchResponses = [];
  */
 function categorizeError(error) {
   const message = error.message.toLowerCase();
-  
+
+  // CRITICAL FIX: Add check for SyntaxError from JSON.parse
+  if (error instanceof SyntaxError || message.includes('invalid json') || message.includes('malformed envelope')) {
+      return {
+          isTerminal: true,
+          statusCode: 422,
+          errorType: 'format_error'
+      };
+  }
+
   // Terminal errors (client should not retry)
-  if (message.includes('missing required fields') || 
+  if (message.includes('missing required fields') ||
       message.includes('no idempotency key') ||
       message.includes('occurred_at must be a valid')) {
     return {
@@ -35,17 +44,7 @@ function categorizeError(error) {
       errorType: 'validation_error'
     };
   }
-  
-  // Add more terminal error patterns here as needed
-  if (message.includes('invalid json') || 
-      message.includes('malformed envelope')) {
-    return {
-      isTerminal: true,
-      statusCode: 422,
-      errorType: 'format_error'
-    };
-  }
-  
+
   // Default to transient (service should retry)
   return {
     isTerminal: false,
@@ -60,32 +59,32 @@ function categorizeError(error) {
  */
 async function flushBatch() {
   if (batchQueue.length === 0) return;
-  
+
   const currentBatch = [...batchQueue];
   const currentResponses = [...pendingBatchResponses];
-  
+
   // Clear batch state
   batchQueue.length = 0;
   pendingBatchResponses.length = 0;
-  
+
   if (batchTimer) {
     clearTimeout(batchTimer);
     batchTimer = null;
   }
-  
+
   const batchStartTime = Date.now();
-  
+
   logger.info('Processing batch', {
     batch_size: currentBatch.length,
     max_batch_size: MAX_BATCH_SIZE,
     wait_time_ms: MAX_BATCH_WAIT_MS
   });
-  
+
   try {
     // Use existing writeBatchToBigQuery function
     const writeResult = await writeBatchToBigQuery(currentBatch);
     const batchProcessingTime = Date.now() - batchStartTime;
-    
+
     // Resolve all pending responses with success
     currentResponses.forEach(({ resolve, originalProcessingTime, logMetadata }) => {
       resolve({
@@ -101,11 +100,11 @@ async function flushBatch() {
         }
       });
     });
-    
+
   } catch (error) {
     const batchProcessingTime = Date.now() - batchStartTime;
     const errorCategory = categorizeError(error);
-    
+
     logger.error('Batch write failed', {
       batch_size: currentBatch.length,
       error: error.message,
@@ -113,11 +112,11 @@ async function flushBatch() {
       batch_processing_time_ms: batchProcessingTime,
       stack: error.stack
     });
-    
+
     // Resolve all pending responses with batch error
     currentResponses.forEach(({ resolve, originalProcessingTime, envelope, idempotencyKey }) => {
       const errorMetadata = {
-        idempotencyKey,
+        idempotency_key: idempotencyKey, // HIGHLIGHT: Standardized name
         tenant_id: envelope?.tenant_id,
         event_type: envelope?.event_type,
         trace_id: envelope?.trace_id,
@@ -128,16 +127,16 @@ async function flushBatch() {
         batch_size: currentBatch.length,
         batch_processing_time_ms: batchProcessingTime
       };
-      
+
       if (errorCategory.isTerminal) {
         logger.warn('Terminal batch error - messages will go to DLQ', errorMetadata);
       } else {
         logger.error('Transient batch error - messages will be retried', {
           ...errorMetadata,
-          stack: error.stack
+          // HIGHLIGHT: Removed 'stack: error.stack' to make logs minimal
         });
       }
-      
+
       resolve({
         success: false,
         statusCode: errorCategory.statusCode,
@@ -163,14 +162,14 @@ async function addToBatch(envelope, processedPayload, idempotencyKey, originalPr
   return new Promise((resolve) => {
     // Add to batch queue
     batchQueue.push({ envelope, processedPayload, idempotencyKey });
-    pendingBatchResponses.push({ 
-      resolve, 
-      originalProcessingTime, 
-      logMetadata, 
-      envelope, 
-      idempotencyKey 
+    pendingBatchResponses.push({
+      resolve,
+      originalProcessingTime,
+      logMetadata,
+      envelope,
+      idempotencyKey
     });
-    
+
     // Check if we should flush the batch
     if (batchQueue.length >= MAX_BATCH_SIZE) {
       // Flush immediately when batch is full
@@ -191,23 +190,23 @@ async function processPubSubMessage(message) {
   let envelope;
   let idempotencyKey;
   const startTime = Date.now();
-  
+
   try {
     // Parse message data
     if (!message?.data) {
       throw new Error('Invalid Pub/Sub message format');
     }
-    
+
     envelope = JSON.parse(Buffer.from(message.data, 'base64').toString());
-    
+
     // Validate envelope and extract idempotency key
     const validation = validateAndExtractKey(envelope);
     if (!validation.isValid) {
       throw new Error(validation.errors.join('; '));
     }
-    
+
     idempotencyKey = validation.idempotencyKey;
-    
+
     // Check sampling
     const shouldProcess = evaluateSampling(idempotencyKey, envelope);
     if (!shouldProcess) {
@@ -218,17 +217,17 @@ async function processPubSubMessage(message) {
         processingTime: Date.now() - startTime
       };
     }
-    
+
     // Process payload (phone normalization, etc.)
     const processedPayload = processPayload(envelope.payload);
-    
+
     const individualProcessingTime = Date.now() - startTime;
-    
+
     // Choose processing path based on batching configuration
     if (ENABLE_BATCHING) {
       // Create log metadata for batch context
       const logMetadata = {
-        idempotencyKey,
+        idempotency_key: idempotencyKey, // HIGHLIGHT: Standardized name
         tenant_id: envelope.tenant_id,
         event_type: envelope.event_type,
         trace_id: envelope.trace_id,
@@ -236,16 +235,16 @@ async function processPubSubMessage(message) {
         insert_status: 'BATCHED',
         individual_processing_time_ms: individualProcessingTime
       };
-      
+
       logger.info('Message queued for batch processing', logMetadata);
-      
+
       // Add to batch and return promise that resolves when batch is processed
       return await addToBatch(envelope, processedPayload, idempotencyKey, individualProcessingTime, logMetadata);
-      
+
     } else {
       // Original single-message processing path (unchanged)
       const writeResult = await writeBatchToBigQuery([{ envelope, processedPayload, idempotencyKey }]);
-      
+
       return {
         success: true,
         sampled: true,
@@ -254,13 +253,13 @@ async function processPubSubMessage(message) {
         logMetadata: writeResult.logMetadata
       };
     }
-    
+
   } catch (error) {
     const processingTime = Date.now() - startTime;
     const errorCategory = categorizeError(error);
-    
+
     const errorMetadata = {
-      idempotencyKey,
+      idempotency_key: idempotencyKey, // HIGHLIGHT: Standardized name
       tenant_id: envelope?.tenant_id,
       event_type: envelope?.event_type,
       trace_id: envelope?.trace_id,
@@ -269,16 +268,16 @@ async function processPubSubMessage(message) {
       insert_status: errorCategory.isTerminal ? 'TERMINAL_ERROR' : 'TRANSIENT_ERROR',
       processing_time_ms: processingTime
     };
-    
+
     if (errorCategory.isTerminal) {
       logger.warn('Terminal error - message will go to DLQ', errorMetadata);
     } else {
       logger.error('Transient error - message will be retried', {
         ...errorMetadata,
-        stack: error.stack
+        // HIGHLIGHT: Removed 'stack: error.stack' to make logs minimal
       });
     }
-    
+
     return {
       success: false,
       statusCode: errorCategory.statusCode,
@@ -298,23 +297,22 @@ async function processPubSubMessage(message) {
 async function handlePubSubRequest(req, res) {
   try {
     const result = await processPubSubMessage(req.body.message);
-    
+
     if (result.success) {
       return res.status(result.statusCode).send();
     } else {
-      // Return appropriate error status
       if (result.isTerminal) {
         return res.status(result.statusCode).send(`Bad Request: ${result.error}`);
       } else {
         return res.status(result.statusCode).send('Internal Server Error');
       }
     }
-    
+
   } catch (error) {
     // Fallback error handling
-    logger.error('Unexpected error in handler', { 
-      error: error.message, 
-      stack: error.stack 
+    logger.error('Unexpected error in handler', {
+      error: error.message,
+      stack: error.stack
     });
     return res.status(503).send('Internal Server Error');
   }
@@ -326,8 +324,8 @@ async function handlePubSubRequest(req, res) {
  */
 async function flushPendingBatch() {
   if (batchQueue.length > 0) {
-    logger.info('Flushing pending batch for shutdown', { 
-      pending_count: batchQueue.length 
+    logger.info('Flushing pending batch for shutdown', {
+      pending_count: batchQueue.length
     });
     await flushBatch();
   }

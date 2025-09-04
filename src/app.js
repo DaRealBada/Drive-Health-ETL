@@ -6,6 +6,7 @@ const { BigQuery } = require('@google-cloud/bigquery');
 
 // The main handler logic is now in a separate file
 const { handlePubSubRequest } = require('./handler');
+const { ensureTable } = require('./bq');
 
 // Create the Express app
 const app = express();
@@ -26,9 +27,7 @@ app.get('/', (req, res) => {
 });
 
 // Main Pub/Sub push endpoint
-// All the core logic has been moved to handler.js for a cleaner app.js
 app.post('/pubsub', async (req, res) => {
-  // Pass the request and response objects to the handler function
   await handlePubSubRequest(req, res);
 });
 
@@ -39,8 +38,18 @@ process.on('SIGTERM', () => {
   process.exit(0);
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+async function startServer() {
+  await ensureTable();
+  return app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-module.exports = { server };
+module.exports = { app, startServer };
+
+if (require.main === module) {
+  startServer().catch(error => {
+    console.error('Failed to start server due to BigQuery error:', error);
+    process.exit(1);
+  });
+}

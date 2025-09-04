@@ -9,6 +9,7 @@ const bigquery = new BigQuery();
 // Configuration from environment variables
 const BQ_DATASET = process.env.BQ_DATASET || 'drivehealth_dw';
 const BQ_TABLE = process.env.BQ_TABLE || 'events';
+const PARTITION_TTL_DAYS = parseInt(process.env.PARTITION_TTL_DAYS) || 365;
 
 /**
  * Create a BigQuery row object from envelope and processed payload
@@ -31,7 +32,6 @@ function createBigQueryRow(envelope, processedPayload, idempotencyKey) {
     sampled: true,
     idempotency_key: idempotencyKey,
     payload: processedPayload, // FIX: Don't stringify JSON field
-    // insertId: idempotencyKey, // CRITICAL: This ensures idempotency
   };
 }
 
@@ -46,19 +46,28 @@ async function writeBatchToBigQuery(events) {
   const startTime = Date.now();
 
   try {
+    // Create just the row data (no insertId in the data)
     const rowsToInsert = events.map(({ envelope, processedPayload, idempotencyKey }) =>
       createBigQueryRow(envelope, processedPayload, idempotencyKey)
     );
 
-    // DEBUG: Log the rows we are trying to insert
     console.log('=== BIGQUERY INSERT ATTEMPT ===');
     console.log('Rows to insert:', JSON.stringify(rowsToInsert, null, 2));
     console.log('===============================');
 
+    // Use the raw property to pass insertId correctly
+    const insertOptions = {
+      raw: true, // Use raw mode for proper insertId handling
+      rows: events.map(({ envelope, processedPayload, idempotencyKey }) => ({
+        insertId: idempotencyKey, // This is the proper way to set insertId
+        json: createBigQueryRow(envelope, processedPayload, idempotencyKey)
+      }))
+    };
+
     await bigquery
       .dataset(BQ_DATASET)
       .table(BQ_TABLE)
-      .insert(rowsToInsert);
+      .insert(insertOptions.rows, { raw: true });
 
     const processingTime = Date.now() - startTime;
     logger.info('BigQuery batch insert success', {
@@ -72,11 +81,9 @@ async function writeBatchToBigQuery(events) {
   } catch (error) {
     const processingTime = Date.now() - startTime;
 
-    // Log detailed BigQuery error information
     console.log('=== BIGQUERY BATCH INSERT FAILED ===');
     console.log('Error message:', error.message);
 
-    // Check for specific row-level errors from BigQuery
     if (error.errors && Array.isArray(error.errors)) {
       console.log('Detailed row-level errors:');
       error.errors.forEach((err, index) => {
@@ -96,7 +103,69 @@ async function writeBatchToBigQuery(events) {
   }
 }
 
+/**
+ * Ensures the BigQuery table exists with the correct schema, partitioning, and clustering.
+ */
+async function ensureTable() {
+  const table = bigquery.dataset(BQ_DATASET).table(BQ_TABLE);
 
+  try {
+    await table.get();
+    console.log(`Table ${BQ_DATASET}.${BQ_TABLE} already exists.`);
+  } catch (error) {
+    if (error.code === 404) {
+      console.log(`Table ${BQ_DATASET}.${BQ_TABLE} not found. Creating table...`);
+
+      const schema = [
+        { name: 'tenant_id', type: 'STRING', mode: 'NULLABLE' },
+        { name: 'event_type', type: 'STRING', mode: 'NULLABLE' },
+        { name: 'schema_version', type: 'INTEGER', mode: 'NULLABLE' },
+        { name: 'envelope_version', type: 'INTEGER', mode: 'NULLABLE' },
+        { name: 'trace_id', type: 'STRING', mode: 'NULLABLE' },
+        { name: 'occurred_at', type: 'TIMESTAMP', mode: 'NULLABLE' },
+        { name: 'received_at', type: 'TIMESTAMP', mode: 'NULLABLE' },
+        { name: 'source', type: 'STRING', mode: 'NULLABLE' },
+        { name: 'sampled', type: 'BOOLEAN', mode: 'NULLABLE' },
+        { name: 'idempotency_key', type: 'STRING', mode: 'NULLABLE' },
+        {
+          name: 'payload',
+          type: 'RECORD',
+          mode: 'NULLABLE',
+          fields: [
+            { name: 'call_id', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'caller', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'callee', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'duration', type: 'INTEGER', mode: 'NULLABLE' },
+            { name: 'status', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'message_id', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'from_phone', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'to_phone', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'channel', type: 'STRING', mode: 'NULLABLE' },
+            { name: 'text_length', type: 'INTEGER', mode: 'NULLABLE' },
+            { name: 'metadata', type: 'JSON', mode: 'NULLABLE' }
+          ],
+        },
+      ];
+
+      const options = {
+        schema: schema,
+        timePartitioning: {
+          type: 'DAY',
+          field: 'occurred_at',
+          expirationMs: PARTITION_TTL_DAYS * 24 * 60 * 60 * 1000,
+        },
+        clustering: { fields: ['tenant_id', 'event_type'] },
+      };
+
+      await bigquery
+        .dataset(BQ_DATASET)
+        .createTable(BQ_TABLE, options);
+      console.log(`Table ${BQ_DATASET}.${BQ_TABLE} created successfully.`);
+    } else {
+      throw error;
+    }
+  }
+}
 
 /**
  * Get BigQuery table information for monitoring
@@ -108,7 +177,7 @@ async function getTableInfo() {
       .dataset(BQ_DATASET)
       .table(BQ_TABLE)
       .getMetadata();
-    
+
     return {
       tableId: metadata.tableReference.tableId,
       location: metadata.location,
@@ -126,6 +195,7 @@ module.exports = {
   createBigQueryRow,
   writeBatchToBigQuery,
   getTableInfo,
+  ensureTable,
   BQ_DATASET,
   BQ_TABLE
 };
