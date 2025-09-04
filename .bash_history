@@ -386,3 +386,7 @@ node scripts/04_step_load_test.js
 node scripts/01_smoke_publish.js
 node scripts/04_step_load_test.js
 node scripts/04_step_load_test.js
+git add .
+git commit -m "Your commit message here"
+git push origin main
+nano .gitignore

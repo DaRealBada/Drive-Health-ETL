@@ -1,1 +1,23 @@
+# Node.js
 node_modules/
+npm-debug.log*
+.npm/
+
+# Logs
+*.log
+
+# Cache files
+.DS_Store
+.cache/
+.vscode/
+
+# Gemini and LLM related
+gemini/
+
+# Cloud Shell related
+.bashrc
+.gitconfig
+.profile
+
+# NPM cache from Google Cloud Shell
+_cacache/
