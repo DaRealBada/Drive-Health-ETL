@@ -1,0 +1,18 @@
+2025-09-03 16:51:55.653 [info] 
+
+
+
+
+2025-09-03 16:51:55.692 [info] Extension host agent started.
+2025-09-03 16:51:56.503 [info] [127.0.0.1][36cb9e88][ManagementConnection] New connection established.
+2025-09-03 16:51:56.554 [info] [127.0.0.1][b37037ea][ExtensionHostConnection] New connection established.
+2025-09-03 16:51:56.575 [info] ComputeTargetPlatform: linux-x64
+2025-09-03 16:51:57.400 [info] [127.0.0.1][b37037ea][ExtensionHostConnection] <2622> Launched Extension Host Process.
+2025-09-03 17:20:25.387 [info] [127.0.0.1][b37037ea][ExtensionHostConnection] The client has reconnected.
+2025-09-03 17:20:25.487 [info] [127.0.0.1][36cb9e88][ManagementConnection] The client has reconnected.
+2025-09-03 17:23:23.932 [info] [127.0.0.1][36cb9e88][ManagementConnection] The client has reconnected.
+2025-09-03 17:23:24.031 [info] [127.0.0.1][b37037ea][ExtensionHostConnection] The client has reconnected.
+2025-09-03 18:43:49.150 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-09-03 19:48:38.036 [info] [127.0.0.1][b37037ea][ExtensionHostConnection] The client has reconnected.
+2025-09-03 19:48:38.063 [info] [127.0.0.1][36cb9e88][ManagementConnection] The client has reconnected.
+2025-09-03 20:05:53.594 [info] [127.0.0.1][36cb9e88][ManagementConnection] The client has disconnected, will wait for reconnection 3h before disposing...

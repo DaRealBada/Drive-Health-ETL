@@ -1,0 +1,596 @@
+2025-09-03 16:52:03.645 [info] [main] Log level: Info
+2025-09-03 16:52:03.645 [info] [main] Validating found git in: "git"
+2025-09-03 16:52:03.645 [info] [main] Using git "2.43.0" from "git"
+2025-09-03 16:52:03.645 [info] [Model][doInitialScan] Initial repository scan started
+2025-09-03 16:52:03.645 [info] > git rev-parse --show-toplevel [12ms]
+2025-09-03 16:52:03.645 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:03.645 [info] > git rev-parse --show-toplevel [3619ms]
+2025-09-03 16:52:03.667 [info] > git rev-parse --git-dir --git-common-dir [5ms]
+2025-09-03 16:52:03.690 [info] [Model][openRepository] Opened repository (path): /home/tolubada1/Drive-Health-ETL
+2025-09-03 16:52:03.690 [info] [Model][openRepository] Opened repository (real path): /home/tolubada1/Drive-Health-ETL
+2025-09-03 16:52:03.713 [info] > git rev-parse --show-toplevel [7ms]
+2025-09-03 16:52:03.713 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:03.715 [info] > git config --get commit.template [15ms]
+2025-09-03 16:52:03.858 [info] > git rev-parse --show-toplevel [136ms]
+2025-09-03 16:52:03.858 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:03.869 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [32ms]
+2025-09-03 16:52:03.920 [info] > git rev-parse --show-toplevel [55ms]
+2025-09-03 16:52:03.920 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:06.601 [info] > git status -z -uall [2718ms]
+2025-09-03 16:52:06.601 [info] > git check-ignore -v -z --stdin [109ms]
+2025-09-03 16:52:06.603 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2705ms]
+2025-09-03 16:52:06.712 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [86ms]
+2025-09-03 16:52:06.727 [info] > git rev-parse --show-toplevel [227ms]
+2025-09-03 16:52:06.727 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:06.902 [info] > git config --get --local branch.main.vscode-merge-base [175ms]
+2025-09-03 16:52:06.902 [warning] [Git][config] git config failed: Failed to execute git
+2025-09-03 16:52:06.921 [info] > git config --get commit.template [237ms]
+2025-09-03 16:52:07.134 [info] > git rev-parse --show-toplevel [372ms]
+2025-09-03 16:52:07.134 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:07.157 [info] > git reflog main --grep-reflog=branch: Created from *. [237ms]
+2025-09-03 16:52:07.171 [info] > git rev-parse --show-toplevel [16ms]
+2025-09-03 16:52:07.171 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:07.172 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [24ms]
+2025-09-03 16:52:07.214 [info] > git status -z -uall [34ms]
+2025-09-03 16:52:07.215 [info] > git symbolic-ref --short refs/remotes/origin/HEAD [52ms]
+2025-09-03 16:52:07.215 [info] fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+2025-09-03 16:52:07.215 [warning] [Repository][getDefaultBranch] Failed to get default branch details: Failed to execute git.
+2025-09-03 16:52:07.218 [info] > git rev-parse --show-toplevel [16ms]
+2025-09-03 16:52:07.218 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:07.219 [info] [Model][doInitialScan] Initial repository scan completed - repositories (1), closed repositories (0), parent repositories (0), unsafe repositories (0)
+2025-09-03 16:52:07.234 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [44ms]
+2025-09-03 16:52:07.245 [info] > git show --textconv :app.js [19ms]
+2025-09-03 16:52:07.245 [info] > git ls-files --stage -- app.js [11ms]
+2025-09-03 16:52:07.257 [info] > git rev-parse --show-toplevel [13ms]
+2025-09-03 16:52:07.257 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 16:52:07.258 [info] > git cat-file -s d0a08d79027fa76f7c5689faed7cd0e2368fe4c2 [5ms]
+2025-09-03 16:52:07.486 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- app.js [6ms]
+2025-09-03 17:04:51.483 [info] > git ls-files --stage -- validation.js [2ms]
+2025-09-03 17:04:51.519 [info] > git show --textconv :validation.js [44ms]
+2025-09-03 17:04:51.520 [info] > git cat-file -s f4f6ce90e01f949ea09d2c807e2e4dc7986ff59d [31ms]
+2025-09-03 17:04:51.564 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- validation.js [3ms]
+2025-09-03 17:09:34.973 [info] > git ls-files --stage -- sampling.js [2ms]
+2025-09-03 17:09:35.013 [info] > git show --textconv :sampling.js [47ms]
+2025-09-03 17:09:35.013 [info] > git cat-file -s 9722011e5947ee3bd4e00a861b837aa40cfc7776 [33ms]
+2025-09-03 17:09:35.116 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- sampling.js [2ms]
+2025-09-03 17:09:49.371 [info] > git show --textconv :validation.js [8ms]
+2025-09-03 17:09:49.372 [info] > git ls-files --stage -- validation.js [2ms]
+2025-09-03 17:09:49.384 [info] > git cat-file -s f4f6ce90e01f949ea09d2c807e2e4dc7986ff59d [5ms]
+2025-09-03 17:10:12.979 [info] > git ls-files --stage -- replay-job.js [2ms]
+2025-09-03 17:10:13.041 [info] > git show --textconv :replay-job.js [70ms]
+2025-09-03 17:10:13.041 [info] > git cat-file -s e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 [56ms]
+2025-09-03 17:10:14.685 [info] > git ls-files --stage -- package.json [4ms]
+2025-09-03 17:10:14.735 [info] > git show --textconv :package.json [62ms]
+2025-09-03 17:10:14.735 [info] > git cat-file -s b70e16d494ab6f0e86288dcafa97560aa40e2997 [45ms]
+2025-09-03 17:10:15.611 [info] > git show --textconv :phone.js [7ms]
+2025-09-03 17:10:15.612 [info] > git ls-files --stage -- phone.js [2ms]
+2025-09-03 17:10:15.619 [info] > git cat-file -s ca60fdb70a8b9aa98eedf421791078f1eab0c999 [2ms]
+2025-09-03 17:10:15.659 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- phone.js [3ms]
+2025-09-03 17:10:19.821 [info] > git ls-files --stage -- index.js [3ms]
+2025-09-03 17:10:19.850 [info] > git show --textconv :index.js [38ms]
+2025-09-03 17:10:19.850 [info] > git cat-file -s 1a39eb625792d6d02d62f23a15552c18aa1597a3 [24ms]
+2025-09-03 17:10:19.893 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- index.js [3ms]
+2025-09-03 17:11:44.229 [info] > git show --textconv :sampling.js [7ms]
+2025-09-03 17:11:44.231 [info] > git ls-files --stage -- sampling.js [2ms]
+2025-09-03 17:11:44.239 [info] > git cat-file -s 9722011e5947ee3bd4e00a861b837aa40cfc7776 [3ms]
+2025-09-03 17:11:45.104 [info] > git show --textconv :validation.js [7ms]
+2025-09-03 17:11:45.105 [info] > git ls-files --stage -- validation.js [2ms]
+2025-09-03 17:11:45.120 [info] > git cat-file -s f4f6ce90e01f949ea09d2c807e2e4dc7986ff59d [9ms]
+2025-09-03 17:11:46.125 [info] > git show --textconv :sampling.js [7ms]
+2025-09-03 17:11:46.126 [info] > git ls-files --stage -- sampling.js [2ms]
+2025-09-03 17:11:46.134 [info] > git cat-file -s 9722011e5947ee3bd4e00a861b837aa40cfc7776 [2ms]
+2025-09-03 17:19:52.492 [info] > git ls-files --stage -- logger.js [5ms]
+2025-09-03 17:19:52.548 [info] > git show --textconv :logger.js [68ms]
+2025-09-03 17:19:52.548 [info] > git cat-file -s e4de4b8d4ad590165fe551e66fb461003e209585 [48ms]
+2025-09-03 17:19:52.585 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- logger.js [3ms]
+2025-09-03 17:38:44.268 [info] > git check-ignore -v -z --stdin [3ms]
+2025-09-03 17:38:44.829 [info] > git config --get commit.template [7ms]
+2025-09-03 17:38:44.830 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 17:38:44.843 [info] > git status -z -uall [7ms]
+2025-09-03 17:38:44.845 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 17:38:52.673 [info] > git config --get commit.template [7ms]
+2025-09-03 17:38:52.674 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 17:38:52.687 [info] > git status -z -uall [6ms]
+2025-09-03 17:38:52.688 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 17:39:28.963 [info] > git rev-parse --show-toplevel [5ms]
+2025-09-03 17:39:28.963 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:39:41.266 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:39:41.266 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:39:51.548 [info] > git rev-parse --show-toplevel [6ms]
+2025-09-03 17:39:51.548 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:40:01.581 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:40:01.581 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:40:02.898 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:40:02.898 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:40:17.506 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:40:17.507 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:40:31.394 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:40:31.394 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:40:35.789 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:40:35.789 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:43:25.371 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:43:25.371 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:43:33.038 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:43:33.038 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:43:34.598 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:43:34.598 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:43:34.914 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:43:34.914 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:44:56.891 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:44:56.891 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:44:57.415 [info] > git rev-parse --show-toplevel [1ms]
+2025-09-03 17:44:57.415 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:45:35.455 [info] > git rev-parse --show-toplevel [5ms]
+2025-09-03 17:45:35.455 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:02.704 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:47:02.704 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:14.487 [info] > git rev-parse --show-toplevel [1ms]
+2025-09-03 17:47:14.487 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:26.191 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:47:26.191 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:27.788 [info] > git rev-parse --show-toplevel [9ms]
+2025-09-03 17:47:27.788 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:35.003 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:47:35.003 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:47:36.434 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:47:36.434 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:48:23.685 [info] > git show --textconv :replay-job.js [7ms]
+2025-09-03 17:48:23.686 [info] > git ls-files --stage -- replay-job.js [2ms]
+2025-09-03 17:48:23.695 [info] > git cat-file -s e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 [3ms]
+2025-09-03 17:50:37.444 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:50:37.444 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:50:46.829 [info] > git show --textconv :README.md [20ms]
+2025-09-03 17:50:46.832 [info] > git ls-files --stage -- README.md [5ms]
+2025-09-03 17:50:46.860 [info] > git cat-file -s 43e42adfdfad8340f2e98eed69fcec7e2e8779cc [15ms]
+2025-09-03 17:50:46.918 [info] > git blame --root --incremental 4fedfe743955917e2a6535c2536a1ca95b86baca -- README.md [6ms]
+2025-09-03 17:50:55.901 [info] > git show --textconv :replay-job.js [7ms]
+2025-09-03 17:50:55.903 [info] > git ls-files --stage -- replay-job.js [2ms]
+2025-09-03 17:50:55.911 [info] > git cat-file -s e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 [2ms]
+2025-09-03 17:50:59.211 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:50:59.211 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:51:00.306 [info] > git config --get commit.template [7ms]
+2025-09-03 17:51:00.307 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 17:51:00.320 [info] > git status -z -uall [7ms]
+2025-09-03 17:51:00.323 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 17:52:39.144 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 17:52:39.720 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 17:52:39.720 [info] > git config --get commit.template [10ms]
+2025-09-03 17:52:39.735 [info] > git status -z -uall [9ms]
+2025-09-03 17:52:39.737 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [5ms]
+2025-09-03 17:52:44.755 [info] > git config --get commit.template [7ms]
+2025-09-03 17:52:44.756 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 17:52:44.769 [info] > git status -z -uall [7ms]
+2025-09-03 17:52:44.770 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 17:52:55.415 [info] > git rev-parse --show-toplevel [4ms]
+2025-09-03 17:52:55.416 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:53:02.237 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:53:02.238 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:55:04.154 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:55:04.154 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:56:54.597 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 17:56:54.597 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:56:59.898 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:56:59.899 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 17:57:01.098 [info] > git rev-parse --show-toplevel [3ms]
+2025-09-03 17:57:01.098 [info] fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+2025-09-03 18:04:33.948 [info] > git config --get commit.template [0ms]
+2025-09-03 18:04:33.957 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:04:33.972 [info] > git status -z -uall [8ms]
+2025-09-03 18:04:33.973 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:04:33.988 [info] > git merge-base refs/heads/main refs/remotes/origin/main [2ms]
+2025-09-03 18:04:33.999 [info] > git diff --name-status -z --diff-filter=ADMR 2d141dd027a8efe936f4857cc02b570e22480e83...refs/remotes/origin/main [4ms]
+2025-09-03 18:04:39.001 [info] > git config --get commit.template [7ms]
+2025-09-03 18:04:39.002 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:04:39.016 [info] > git status -z -uall [7ms]
+2025-09-03 18:04:39.018 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:07:37.635 [info] > git config --get commit.template [7ms]
+2025-09-03 18:07:37.637 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 18:07:37.651 [info] > git status -z -uall [8ms]
+2025-09-03 18:07:37.654 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 18:09:01.450 [info] > git rev-parse --show-toplevel [2ms]
+2025-09-03 18:09:01.459 [info] > git rev-parse --git-dir --git-common-dir [2ms]
+2025-09-03 18:09:01.467 [info] [Model][openRepository] Opened repository (path): /home/tolubada1
+2025-09-03 18:09:01.467 [info] [Model][openRepository] Opened repository (real path): /home/tolubada1
+2025-09-03 18:09:01.477 [info] > git config --get commit.template [3ms]
+2025-09-03 18:09:01.484 [info] [Git][getRemotes] No remotes found in the git config file
+2025-09-03 18:09:01.485 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/master refs/remotes/master [2ms]
+2025-09-03 18:09:01.485 [warning] [Git][getBranch] No such branch: master
+2025-09-03 18:09:01.499 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:09:01.614 [info] > git status -z -uall [123ms]
+2025-09-03 18:09:03.198 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/master refs/remotes/master [1423ms]
+2025-09-03 18:09:03.199 [warning] [Git][getBranch] No such branch: master
+2025-09-03 18:09:03.201 [error] [GitHistoryProvider][resolveHEADMergeBase] Failed to resolve merge base for master: Error: No such branch: master.
+2025-09-03 18:09:03.233 [info] > git config --get commit.template [42ms]
+2025-09-03 18:09:03.234 [info] > git check-ignore -v -z --stdin [11ms]
+2025-09-03 18:09:03.234 [info] > git check-ignore -v -z --stdin [3ms]
+2025-09-03 18:09:03.241 [info] [Git][getRemotes] No remotes found in the git config file
+2025-09-03 18:09:03.243 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/master refs/remotes/master [2ms]
+2025-09-03 18:09:03.243 [warning] [Git][getBranch] No such branch: master
+2025-09-03 18:09:03.258 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:09:03.351 [info] > git status -z -uall [101ms]
+2025-09-03 18:13:18.456 [info] > git check-ignore -v -z --stdin [7ms]
+2025-09-03 18:15:38.668 [info] > git config --get commit.template [3ms]
+2025-09-03 18:15:38.683 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [9ms]
+2025-09-03 18:15:38.707 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [7ms]
+2025-09-03 18:15:38.770 [info] > git status -z -uall [80ms]
+2025-09-03 18:15:38.832 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [4ms]
+2025-09-03 18:15:38.845 [info] > git config --get --local branch.main.vscode-merge-base [6ms]
+2025-09-03 18:15:38.845 [warning] [Git][config] git config failed: Failed to execute git
+2025-09-03 18:15:38.854 [info] > git reflog main --grep-reflog=branch: Created from *. [3ms]
+2025-09-03 18:15:38.862 [info] > git symbolic-ref --short refs/remotes/origin/HEAD [2ms]
+2025-09-03 18:15:38.862 [info] fatal: ref refs/remotes/origin/HEAD is not a symbolic ref
+2025-09-03 18:15:38.863 [warning] [Repository][getDefaultBranch] Failed to get default branch details: Failed to execute git.
+2025-09-03 18:15:39.181 [info] > git show --textconv :docs/dlq-replay.md [17ms]
+2025-09-03 18:15:39.181 [info] > git ls-files --stage -- docs/dlq-replay.md [11ms]
+2025-09-03 18:15:39.191 [info] > git cat-file -s 826462d2fad0c30587b039afc23f9b84080f3ced [3ms]
+2025-09-03 18:15:39.406 [info] > git blame --root --incremental 292b6572399c0d8cb0d3cef19ba10ca763afefd0 -- docs/dlq-replay.md [4ms]
+2025-09-03 18:15:43.844 [info] > git config --get commit.template [8ms]
+2025-09-03 18:15:43.854 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:15:43.877 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:15:43.937 [info] > git status -z -uall [77ms]
+2025-09-03 18:15:44.582 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 18:16:08.876 [info] > git config --get commit.template [7ms]
+2025-09-03 18:16:08.877 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:16:08.896 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [5ms]
+2025-09-03 18:16:08.962 [info] > git status -z -uall [79ms]
+2025-09-03 18:16:13.989 [info] > git config --get commit.template [15ms]
+2025-09-03 18:16:13.990 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:16:14.016 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:16:14.074 [info] > git status -z -uall [77ms]
+2025-09-03 18:18:20.916 [info] > git config --get commit.template [8ms]
+2025-09-03 18:18:20.918 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 18:18:20.938 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2025-09-03 18:18:21.001 [info] > git status -z -uall [77ms]
+2025-09-03 18:18:56.786 [info] > git config --get commit.template [3ms]
+2025-09-03 18:18:56.795 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:18:56.815 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [6ms]
+2025-09-03 18:18:56.881 [info] > git status -z -uall [79ms]
+2025-09-03 18:19:04.209 [info] > git config --get commit.template [8ms]
+2025-09-03 18:19:04.210 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:19:04.234 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [10ms]
+2025-09-03 18:19:04.295 [info] > git status -z -uall [79ms]
+2025-09-03 18:19:23.334 [info] > git config --get commit.template [8ms]
+2025-09-03 18:19:23.336 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 18:19:23.367 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [11ms]
+2025-09-03 18:19:23.427 [info] > git status -z -uall [84ms]
+2025-09-03 18:22:06.897 [info] > git config --get commit.template [9ms]
+2025-09-03 18:22:06.899 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 18:22:06.920 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [8ms]
+2025-09-03 18:22:06.934 [info] > git ls-files --stage -- docs/dlq-replay.md [5ms]
+2025-09-03 18:22:06.942 [info] > git cat-file -s 826462d2fad0c30587b039afc23f9b84080f3ced [2ms]
+2025-09-03 18:22:06.980 [info] > git status -z -uall [75ms]
+2025-09-03 18:22:06.984 [info] > git show --textconv :docs/dlq-replay.md [7ms]
+2025-09-03 18:23:53.956 [info] > git config --get commit.template [7ms]
+2025-09-03 18:23:53.964 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [9ms]
+2025-09-03 18:23:53.991 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:23:54.048 [info] > git status -z -uall [77ms]
+2025-09-03 18:23:54.077 [info] > git ls-files --stage -- docs/dlq-replay.md [5ms]
+2025-09-03 18:23:54.086 [info] > git cat-file -s 826462d2fad0c30587b039afc23f9b84080f3ced [2ms]
+2025-09-03 18:23:54.126 [info] > git show --textconv :docs/dlq-replay.md [6ms]
+2025-09-03 18:23:59.066 [info] > git config --get commit.template [7ms]
+2025-09-03 18:23:59.068 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:23:59.090 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [1ms]
+2025-09-03 18:23:59.154 [info] > git status -z -uall [80ms]
+2025-09-03 18:24:08.567 [info] > git config --get commit.template [7ms]
+2025-09-03 18:24:08.568 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:24:08.584 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:24:08.650 [info] > git status -z -uall [76ms]
+2025-09-03 18:31:53.689 [info] > git config --get commit.template [8ms]
+2025-09-03 18:31:53.702 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [7ms]
+2025-09-03 18:31:53.726 [info] > git config --get commit.template [39ms]
+2025-09-03 18:31:53.747 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [21ms]
+2025-09-03 18:31:53.747 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [46ms]
+2025-09-03 18:31:53.748 [info] > git ls-files --stage -- docs/dlq-replay.md [13ms]
+2025-09-03 18:31:53.776 [info] > git status -z -uall [10ms]
+2025-09-03 18:31:53.776 [info] > git cat-file -s 826462d2fad0c30587b039afc23f9b84080f3ced [20ms]
+2025-09-03 18:31:53.778 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:31:53.792 [info] > git blame --root --incremental 9dfe2e79c2f2772492623ea29c17720f6cdf46a4 -- docs/dlq-replay.md [3ms]
+2025-09-03 18:31:53.800 [info] > git status -z -uall [91ms]
+2025-09-03 18:31:53.821 [info] > git show --textconv :docs/dlq-replay.md [6ms]
+2025-09-03 18:31:58.819 [info] > git config --get commit.template [8ms]
+2025-09-03 18:31:58.821 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 18:31:58.843 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 18:31:58.908 [info] > git status -z -uall [81ms]
+2025-09-03 18:31:59.609 [info] > git show --textconv :index.js [8ms]
+2025-09-03 18:31:59.610 [info] > git ls-files --stage -- index.js [3ms]
+2025-09-03 18:31:59.618 [info] > git cat-file -s 96de27882d8363c10a9ab3a1054e1a8db3ad486c [2ms]
+2025-09-03 18:31:59.661 [info] > git blame --root --incremental 2d141dd027a8efe936f4857cc02b570e22480e83 -- index.js [3ms]
+2025-09-03 18:32:04.711 [info] > git ls-files --stage -- handler.js [2ms]
+2025-09-03 18:32:04.781 [info] > git show --textconv :handler.js [79ms]
+2025-09-03 18:32:04.781 [info] > git cat-file -s 6e76f93d80d26329c63322301d24af67ca97bafd [64ms]
+2025-09-03 18:32:04.861 [info] > git blame --root --incremental 2d141dd027a8efe936f4857cc02b570e22480e83 -- handler.js [3ms]
+2025-09-03 18:32:10.515 [info] > git show --textconv :logger.js [8ms]
+2025-09-03 18:32:10.516 [info] > git ls-files --stage -- logger.js [2ms]
+2025-09-03 18:32:10.528 [info] > git cat-file -s e4de4b8d4ad590165fe551e66fb461003e209585 [5ms]
+2025-09-03 18:32:10.587 [info] > git blame --root --incremental 2d141dd027a8efe936f4857cc02b570e22480e83 -- logger.js [8ms]
+2025-09-03 18:32:11.968 [info] > git config --get commit.template [8ms]
+2025-09-03 18:32:11.969 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:32:11.989 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:32:12.051 [info] > git status -z -uall [76ms]
+2025-09-03 18:32:12.209 [info] > git ls-files --stage -- package-lock.json [4ms]
+2025-09-03 18:32:12.245 [info] > git show --textconv :package-lock.json [50ms]
+2025-09-03 18:32:12.245 [info] > git cat-file -s b7e1de96967049f10225904e5ac9838b52c2e23c [26ms]
+2025-09-03 18:32:14.264 [info] > git show --textconv :app.js [9ms]
+2025-09-03 18:32:14.265 [info] > git ls-files --stage -- app.js [3ms]
+2025-09-03 18:32:14.276 [info] > git cat-file -s d0a08d79027fa76f7c5689faed7cd0e2368fe4c2 [2ms]
+2025-09-03 18:32:14.322 [info] > git blame --root --incremental 2d141dd027a8efe936f4857cc02b570e22480e83 -- app.js [3ms]
+2025-09-03 18:32:22.118 [info] > git show --textconv :scripts/02_idempotency_test.js [15ms]
+2025-09-03 18:32:22.132 [info] > git ls-files --stage -- scripts/02_idempotency_test.js [18ms]
+2025-09-03 18:32:22.143 [info] > git cat-file -s aa79fd4b4ede8137fd317f6bd0341327007379ad [2ms]
+2025-09-03 18:32:22.193 [info] > git blame --root --incremental 9dfe2e79c2f2772492623ea29c17720f6cdf46a4 -- scripts/02_idempotency_test.js [4ms]
+2025-09-03 18:32:22.628 [info] > git show --textconv :scripts/03_dlq_and_replay.js [8ms]
+2025-09-03 18:32:22.632 [info] > git ls-files --stage -- scripts/03_dlq_and_replay.js [5ms]
+2025-09-03 18:32:22.641 [info] > git cat-file -s 594bc7bd22ea206c5904f78fb3eb10663ab3289c [2ms]
+2025-09-03 18:32:22.681 [info] > git blame --root --incremental 9dfe2e79c2f2772492623ea29c17720f6cdf46a4 -- scripts/03_dlq_and_replay.js [3ms]
+2025-09-03 18:32:23.027 [info] > git show --textconv :scripts/04_step_load_test.js [7ms]
+2025-09-03 18:32:23.031 [info] > git ls-files --stage -- scripts/04_step_load_test.js [5ms]
+2025-09-03 18:32:23.041 [info] > git cat-file -s d7c6e806df24f9a795c1c00630c628f8862bf59e [3ms]
+2025-09-03 18:32:23.082 [info] > git blame --root --incremental 9dfe2e79c2f2772492623ea29c17720f6cdf46a4 -- scripts/04_step_load_test.js [4ms]
+2025-09-03 18:32:29.639 [info] > git show --textconv :Dockerfile [9ms]
+2025-09-03 18:32:29.641 [info] > git ls-files --stage -- Dockerfile [3ms]
+2025-09-03 18:32:29.652 [info] > git cat-file -s 949d590b6edf5529c321904378e642c0cb046045 [3ms]
+2025-09-03 18:33:06.838 [info] > git config --get commit.template [8ms]
+2025-09-03 18:33:06.839 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:33:06.864 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 18:33:06.926 [info] > git status -z -uall [80ms]
+2025-09-03 18:33:11.443 [info] > git check-ignore -v -z --stdin [5ms]
+2025-09-03 18:33:37.276 [warning] [Git][getHEAD] Failed to parse HEAD file: ENOENT: no such file or directory, open '/home/tolubada1/Drive-Health-ETL/.git/HEAD'
+2025-09-03 18:33:37.289 [warning] [Git][getRemotes] Error: ENOENT: no such file or directory, open '/home/tolubada1/Drive-Health-ETL/.git/config'
+2025-09-03 18:33:37.310 [warning] [Git][getHEAD] Failed to parse HEAD file: ENOENT: no such file or directory, open '/home/tolubada1/Drive-Health-ETL/.git/HEAD'
+2025-09-03 18:33:37.323 [warning] [Git][getRemotes] Error: ENOENT: no such file or directory, open '/home/tolubada1/Drive-Health-ETL/.git/config'
+2025-09-03 18:33:37.342 [info] > git config --get commit.template [38ms]
+2025-09-03 18:33:37.349 [info] > git ls-files --stage -- Drive-Health-ETL/Dockerfile [11ms]
+2025-09-03 18:33:37.357 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [8ms]
+2025-09-03 18:33:37.382 [info] > git hash-object -t tree /dev/null [26ms]
+2025-09-03 18:33:37.383 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/Drive-Health-ETL/Dockerfile.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FDrive-Health-ETL%2FDockerfile%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:37.391 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [14ms]
+2025-09-03 18:33:37.439 [info] > git status -z -uall [75ms]
+2025-09-03 18:33:37.961 [info] > git check-ignore -v -z --stdin [12ms]
+2025-09-03 18:33:39.581 [info] > git check-ignore -v -z --stdin [5ms]
+2025-09-03 18:33:42.466 [info] > git config --get commit.template [11ms]
+2025-09-03 18:33:42.469 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:33:42.512 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [17ms]
+2025-09-03 18:33:42.574 [info] > git status -z -uall [95ms]
+2025-09-03 18:33:46.230 [info] > git show --textconv :src/Dockerfile [8ms]
+2025-09-03 18:33:46.231 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/src/Dockerfile.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2FDockerfile%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:46.241 [info] > git ls-files --stage -- src/Dockerfile [12ms]
+2025-09-03 18:33:46.241 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/src/Dockerfile.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2FDockerfile%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:51.131 [info] > git show --textconv :scripts/04_step_load_test.js [10ms]
+2025-09-03 18:33:51.133 [info] > git ls-files --stage -- scripts/04_step_load_test.js [6ms]
+2025-09-03 18:33:51.142 [info] > git cat-file -s d7c6e806df24f9a795c1c00630c628f8862bf59e [3ms]
+2025-09-03 18:33:51.197 [info] > git blame --root --incremental 65635e43e7e9a240cc86848bf32d9e0eb7fdd229 -- scripts/04_step_load_test.js [5ms]
+2025-09-03 18:33:53.733 [info] > git show --textconv :Drive-Health-ETL/index.js [8ms]
+2025-09-03 18:33:53.734 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/Drive-Health-ETL/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FDrive-Health-ETL%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:53.737 [info] > git ls-files --stage -- Drive-Health-ETL/index.js [5ms]
+2025-09-03 18:33:53.738 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/Drive-Health-ETL/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FDrive-Health-ETL%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:53.774 [info] > git blame --root --incremental 65635e43e7e9a240cc86848bf32d9e0eb7fdd229 -- Drive-Health-ETL/index.js [3ms]
+2025-09-03 18:33:53.774 [info] fatal: no such path Drive-Health-ETL/index.js in 65635e43e7e9a240cc86848bf32d9e0eb7fdd229
+2025-09-03 18:33:57.931 [info] > git show --textconv :src/index.js [9ms]
+2025-09-03 18:33:57.932 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/src/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:33:57.936 [info] > git ls-files --stage -- src/index.js [6ms]
+2025-09-03 18:33:57.937 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/src/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:34:00.165 [info] > git show --textconv :Drive-Health-ETL/index.js [7ms]
+2025-09-03 18:34:00.166 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/Drive-Health-ETL/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FDrive-Health-ETL%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:34:00.169 [info] > git ls-files --stage -- Drive-Health-ETL/index.js [5ms]
+2025-09-03 18:34:00.170 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/Drive-Health-ETL/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FDrive-Health-ETL%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:34:01.439 [info] > git show --textconv :src/index.js [7ms]
+2025-09-03 18:34:01.440 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/src/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:34:01.444 [info] > git ls-files --stage -- src/index.js [6ms]
+2025-09-03 18:34:01.444 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/src/index.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fsrc%2Findex.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 18:34:04.445 [info] > git show --textconv :scripts/04_step_load_test.js [7ms]
+2025-09-03 18:34:04.450 [info] > git ls-files --stage -- scripts/04_step_load_test.js [6ms]
+2025-09-03 18:34:04.461 [info] > git cat-file -s d7c6e806df24f9a795c1c00630c628f8862bf59e [5ms]
+2025-09-03 18:34:06.858 [info] > git show --textconv :scripts/03_dlq_and_replay.js [8ms]
+2025-09-03 18:34:06.862 [info] > git ls-files --stage -- scripts/03_dlq_and_replay.js [5ms]
+2025-09-03 18:34:06.872 [info] > git cat-file -s 594bc7bd22ea206c5904f78fb3eb10663ab3289c [3ms]
+2025-09-03 18:34:06.912 [info] > git blame --root --incremental 65635e43e7e9a240cc86848bf32d9e0eb7fdd229 -- scripts/03_dlq_and_replay.js [4ms]
+2025-09-03 18:34:07.487 [info] > git show --textconv :scripts/04_step_load_test.js [8ms]
+2025-09-03 18:34:07.491 [info] > git ls-files --stage -- scripts/04_step_load_test.js [6ms]
+2025-09-03 18:34:07.503 [info] > git cat-file -s d7c6e806df24f9a795c1c00630c628f8862bf59e [6ms]
+2025-09-03 18:46:24.180 [info] > git config --get commit.template [2ms]
+2025-09-03 18:46:24.190 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:46:24.207 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 18:46:24.296 [info] > git status -z -uall [99ms]
+2025-09-03 18:46:24.380 [info] > git merge-base refs/heads/main refs/remotes/origin/main [3ms]
+2025-09-03 18:46:24.390 [info] > git diff --name-status -z --diff-filter=ADMR 46e0ceb3087b7074ed04f730b6914b241f84735d...refs/remotes/origin/main [3ms]
+2025-09-03 18:46:29.394 [info] > git config --get commit.template [8ms]
+2025-09-03 18:46:29.395 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:46:29.411 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 18:46:29.481 [info] > git status -z -uall [79ms]
+2025-09-03 18:56:07.871 [info] > git config --get commit.template [3ms]
+2025-09-03 18:56:07.884 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:56:07.910 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:56:07.982 [info] > git status -z -uall [86ms]
+2025-09-03 18:56:11.629 [info] > git show --textconv :scripts/01_smoke_publish.js [14ms]
+2025-09-03 18:56:11.630 [info] > git ls-files --stage -- scripts/01_smoke_publish.js [3ms]
+2025-09-03 18:56:11.643 [info] > git cat-file -s 384648ee9ef26ee9a45098cccf26ea4085b13594 [2ms]
+2025-09-03 18:56:11.688 [info] > git blame --root --incremental 46e0ceb3087b7074ed04f730b6914b241f84735d -- scripts/01_smoke_publish.js [3ms]
+2025-09-03 18:56:13.072 [info] > git config --get commit.template [12ms]
+2025-09-03 18:56:13.073 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:56:13.107 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 18:56:13.179 [info] > git status -z -uall [94ms]
+2025-09-03 18:56:58.432 [info] > git config --get commit.template [11ms]
+2025-09-03 18:56:58.433 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 18:56:58.457 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 18:56:58.525 [info] > git status -z -uall [81ms]
+2025-09-03 18:57:49.642 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:00:43.073 [info] > git config --get commit.template [124ms]
+2025-09-03 19:00:43.083 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:00:43.100 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:00:43.172 [info] > git status -z -uall [81ms]
+2025-09-03 19:00:56.922 [info] > git config --get commit.template [7ms]
+2025-09-03 19:00:56.924 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:00:56.942 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:00:57.013 [info] > git status -z -uall [82ms]
+2025-09-03 19:01:02.076 [info] > git config --get commit.template [8ms]
+2025-09-03 19:01:02.078 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:01:02.093 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:01:02.166 [info] > git status -z -uall [81ms]
+2025-09-03 19:01:10.146 [info] > git check-ignore -v -z --stdin [1ms]
+2025-09-03 19:01:22.386 [info] > git config --get commit.template [8ms]
+2025-09-03 19:01:22.387 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:01:22.405 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:01:22.504 [info] > git status -z -uall [109ms]
+2025-09-03 19:02:07.462 [info] > git config --get commit.template [7ms]
+2025-09-03 19:02:07.463 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:02:07.482 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:02:07.556 [info] > git status -z -uall [83ms]
+2025-09-03 19:06:06.910 [info] > git config --get commit.template [9ms]
+2025-09-03 19:06:06.912 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:06:06.929 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:06:07.006 [info] > git status -z -uall [87ms]
+2025-09-03 19:06:12.094 [info] > git config --get commit.template [8ms]
+2025-09-03 19:06:12.096 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:06:12.112 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:06:12.188 [info] > git status -z -uall [85ms]
+2025-09-03 19:06:15.823 [info] > git ls-files --stage -- src/package-lock.json [19ms]
+2025-09-03 19:06:15.831 [info] > git show --textconv :src/package-lock.json [36ms]
+2025-09-03 19:06:15.835 [info] > git cat-file -s b7e1de96967049f10225904e5ac9838b52c2e23c [6ms]
+2025-09-03 19:06:19.152 [info] > git show --textconv :src/package-lock.json [9ms]
+2025-09-03 19:06:19.152 [info] > git ls-files --stage -- src/package-lock.json [2ms]
+2025-09-03 19:06:19.161 [info] > git cat-file -s b7e1de96967049f10225904e5ac9838b52c2e23c [2ms]
+2025-09-03 19:06:33.605 [info] > git blame --root --incremental 46e0ceb3087b7074ed04f730b6914b241f84735d -- src/package-lock.json [4ms]
+2025-09-03 19:06:43.578 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:06:46.621 [info] > git show --textconv :package.json [12ms]
+2025-09-03 19:06:46.622 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/package.json.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fpackage.json%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:06:46.623 [info] > git ls-files --stage -- package.json [3ms]
+2025-09-03 19:06:46.623 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/package.json.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fpackage.json%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:06:50.813 [info] > git check-ignore -v -z --stdin [1ms]
+2025-09-03 19:06:52.671 [info] > git show --textconv :src/README.md [8ms]
+2025-09-03 19:06:52.673 [info] > git ls-files --stage -- src/README.md [3ms]
+2025-09-03 19:06:52.682 [info] > git cat-file -s 43e42adfdfad8340f2e98eed69fcec7e2e8779cc [2ms]
+2025-09-03 19:06:56.530 [info] > git show --textconv :README.md [8ms]
+2025-09-03 19:06:56.531 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/README.md.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FREADME.md%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:06:56.532 [info] > git ls-files --stage -- README.md [3ms]
+2025-09-03 19:06:56.533 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/README.md.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2FREADME.md%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:06:56.708 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:07:02.471 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:07:06.980 [info] > git blame --root --incremental 46e0ceb3087b7074ed04f730b6914b241f84735d -- README.md [3ms]
+2025-09-03 19:07:06.980 [info] fatal: no such path README.md in 46e0ceb3087b7074ed04f730b6914b241f84735d
+2025-09-03 19:07:12.754 [info] > git config --get commit.template [7ms]
+2025-09-03 19:07:12.755 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:07:12.774 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:07:12.848 [info] > git status -z -uall [84ms]
+2025-09-03 19:08:45.345 [info] > git config --get commit.template [3ms]
+2025-09-03 19:08:45.354 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:08:45.371 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:08:45.448 [info] > git status -z -uall [86ms]
+2025-09-03 19:08:59.505 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:09:12.505 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:09:19.633 [info] > git config --get commit.template [8ms]
+2025-09-03 19:09:19.634 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:09:19.652 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:09:19.722 [info] > git status -z -uall [81ms]
+2025-09-03 19:09:24.786 [info] > git config --get commit.template [7ms]
+2025-09-03 19:09:24.788 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:09:24.804 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:09:24.875 [info] > git status -z -uall [79ms]
+2025-09-03 19:10:40.506 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:11:17.216 [info] > git config --get commit.template [7ms]
+2025-09-03 19:11:17.218 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:11:17.235 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:11:17.310 [info] > git status -z -uall [84ms]
+2025-09-03 19:11:22.382 [info] > git config --get commit.template [8ms]
+2025-09-03 19:11:22.384 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:11:22.401 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:11:22.497 [info] > git status -z -uall [105ms]
+2025-09-03 19:14:27.420 [info] > git config --get commit.template [2ms]
+2025-09-03 19:14:27.428 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:14:27.446 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:14:27.522 [info] > git status -z -uall [86ms]
+2025-09-03 19:18:37.226 [info] > git config --get commit.template [8ms]
+2025-09-03 19:18:37.227 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:18:37.245 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:18:37.321 [info] > git status -z -uall [86ms]
+2025-09-03 19:18:42.405 [info] > git config --get commit.template [7ms]
+2025-09-03 19:18:42.406 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:18:42.423 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:18:42.520 [info] > git status -z -uall [106ms]
+2025-09-03 19:18:56.478 [info] > git show --textconv :src/package-lock.json [9ms]
+2025-09-03 19:18:56.479 [info] > git ls-files --stage -- src/package-lock.json [3ms]
+2025-09-03 19:18:56.488 [info] > git cat-file -s b7e1de96967049f10225904e5ac9838b52c2e23c [3ms]
+2025-09-03 19:19:00.385 [info] > git show --textconv :src/package.json [8ms]
+2025-09-03 19:19:00.386 [info] > git ls-files --stage -- src/package.json [2ms]
+2025-09-03 19:19:00.395 [info] > git cat-file -s b70e16d494ab6f0e86288dcafa97560aa40e2997 [2ms]
+2025-09-03 19:19:06.839 [info] > git show --textconv :src/package-lock.json [8ms]
+2025-09-03 19:19:06.840 [info] > git ls-files --stage -- src/package-lock.json [3ms]
+2025-09-03 19:19:06.849 [info] > git cat-file -s b7e1de96967049f10225904e5ac9838b52c2e23c [3ms]
+2025-09-03 19:19:55.351 [info] > git config --get commit.template [8ms]
+2025-09-03 19:19:55.352 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:19:55.369 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:19:55.440 [info] > git status -z -uall [81ms]
+2025-09-03 19:20:07.573 [info] > git check-ignore -v -z --stdin [1ms]
+2025-09-03 19:20:09.506 [info] > git config --get commit.template [8ms]
+2025-09-03 19:20:09.508 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:20:09.525 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:20:09.603 [info] > git status -z -uall [87ms]
+2025-09-03 19:20:14.677 [info] > git config --get commit.template [9ms]
+2025-09-03 19:20:14.678 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:20:14.695 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:20:14.767 [info] > git status -z -uall [82ms]
+2025-09-03 19:20:30.657 [info] > git config --get commit.template [8ms]
+2025-09-03 19:20:30.658 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:20:30.675 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:20:30.755 [info] > git status -z -uall [89ms]
+2025-09-03 19:20:59.378 [info] > git config --get commit.template [7ms]
+2025-09-03 19:20:59.379 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:20:59.398 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [4ms]
+2025-09-03 19:20:59.473 [info] > git status -z -uall [87ms]
+2025-09-03 19:22:06.451 [info] > git config --get commit.template [7ms]
+2025-09-03 19:22:06.452 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:22:06.470 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [3ms]
+2025-09-03 19:22:06.549 [info] > git status -z -uall [90ms]
+2025-09-03 19:22:11.619 [info] > git config --get commit.template [8ms]
+2025-09-03 19:22:11.620 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [3ms]
+2025-09-03 19:22:11.636 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:22:11.707 [info] > git status -z -uall [80ms]
+2025-09-03 19:22:15.144 [info] > git show --textconv :load-test.js [24ms]
+2025-09-03 19:22:15.149 [warning] [GitFileSystemProvider][readFile] File not found - git:/home/tolubada1/load-test.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fload-test.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:22:15.153 [info] > git ls-files --stage -- load-test.js [11ms]
+2025-09-03 19:22:15.154 [warning] [GitFileSystemProvider][stat] File not found - git:/home/tolubada1/load-test.js.git?%7B%22path%22%3A%22%2Fhome%2Ftolubada1%2Fload-test.js%22%2C%22ref%22%3A%22%22%7D
+2025-09-03 19:22:15.316 [info] > git check-ignore -v -z --stdin [2ms]
+2025-09-03 19:22:17.142 [info] > git blame --root --incremental 46e0ceb3087b7074ed04f730b6914b241f84735d -- load-test.js [5ms]
+2025-09-03 19:22:17.142 [info] fatal: no such path load-test.js in 46e0ceb3087b7074ed04f730b6914b241f84735d
+2025-09-03 19:22:43.317 [info] > git config --get commit.template [7ms]
+2025-09-03 19:22:43.318 [info] > git for-each-ref --format=%(refname)%00%(upstream:short)%00%(objectname)%00%(upstream:track)%00%(upstream:remotename)%00%(upstream:remoteref) refs/heads/main refs/remotes/main [2ms]
+2025-09-03 19:22:43.334 [info] > git for-each-ref --sort -committerdate --format %(refname)%00%(objectname)%00%(*objectname) [2ms]
+2025-09-03 19:22:43.406 [info] > git status -z -uall [81ms]
+2025-09-03 19:47:18.462 [info] > git check-ignore -v -z --stdin [3ms]

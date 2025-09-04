@@ -1,0 +1,160 @@
+2025-09-03 01:23:04.430 [info] Extension host with pid 3331 started
+2025-09-03 01:23:04.430 [error] Error: EEXIST: file already exists, open '/home/tolubada1/.codeoss/data/User/workspaceStorage/-55cde802/vscode.lock'
+2025-09-03 01:23:04.441 [info] Lock '/home/tolubada1/.codeoss/data/User/workspaceStorage/-55cde802/vscode.lock': Could not acquire lock, checking if the file is stale.
+2025-09-03 01:23:04.443 [info] Lock '/home/tolubada1/.codeoss/data/User/workspaceStorage/-55cde802/vscode.lock': The pid 8646 appears to be gone.
+2025-09-03 01:23:04.443 [info] Lock '/home/tolubada1/.codeoss/data/User/workspaceStorage/-55cde802/vscode.lock': Deleting a stale lock.
+2025-09-03 01:23:04.462 [info] Lock '/home/tolubada1/.codeoss/data/User/workspaceStorage/-55cde802/vscode.lock': Lock acquired.
+2025-09-03 01:23:05.956 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2025-09-03 01:23:05.957 [info] ExtensionService#_doActivateExtension vscode.typescript-language-features, startup: false, activationEvent: 'onLanguage:javascript'
+2025-09-03 01:23:06.306 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2025-09-03 01:23:06.570 [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+2025-09-03 01:23:06.571 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2025-09-03 01:23:07.024 [info] Eager extensions activated
+2025-09-03 01:23:07.027 [info] ExtensionService#_doActivateExtension EditorConfig.EditorConfig, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:07.028 [info] ExtensionService#_doActivateExtension google.cloud-shell, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:07.032 [info] ExtensionService#_doActivateExtension google.geminicodeassist, startup: false, activationEvent: 'onStartupFinished', root cause: googlecloudtools.cloudcode
+2025-09-03 01:23:07.032 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:07.036 [info] ExtensionService#_doActivateExtension google.gemini-cli-vscode-ide-companion, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:07.037 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:10.515 [info] ExtensionService#_doActivateExtension googlecloudtools.cloudcode, startup: false, activationEvent: 'onStartupFinished'
+2025-09-03 01:23:13.461 [info] ExtensionService#_doActivateExtension vscode.configuration-editing, startup: false, activationEvent: 'onLanguage:jsonc'
+2025-09-03 01:23:13.462 [info] ExtensionService#_doActivateExtension vscode.json-language-features, startup: false, activationEvent: 'onLanguage:jsonc'
+2025-09-03 01:23:14.621 [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+2025-09-03 01:23:35.704 [info] ExtensionService#_doActivateExtension vscode.extension-editing, startup: false, activationEvent: 'onLanguage:json'
+2025-09-03 01:23:35.705 [info] ExtensionService#_doActivateExtension vscode.npm, startup: false, activationEvent: 'onLanguage:json'
+2025-09-03 01:32:47.566 [error] [vscode.typescript-language-features] provider FAILED
+2025-09-03 01:32:47.567 [error] Error: <semantic> TypeScript Server Error (5.8.3)
+Debug Failure. False expression: Changes overlap
+Verbose Debug Information: {"pos":0,"end":5407} and {"pos":91,"end":91}
+Error: Debug Failure. False expression: Changes overlap
+Verbose Debug Information: {"pos":0,"end":5407} and {"pos":91,"end":91}
+    at /google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:178699:15
+    at mapDefined (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:2606:22)
+    at Object.getTextChangesFromChanges (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:178695:12)
+    at _ChangeTracker.getChanges (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:178592:35)
+    at _ChangeTracker.with (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:178071:20)
+    at Object.pasteEditsProvider (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:182016:60)
+    at Object.getPasteEdits (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:152265:34)
+    at IpcIOSession.getPasteEdits (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:195298:49)
+    at getPasteEdits (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:193419:43)
+    at /google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:195676:15
+    at IpcIOSession.executeWithRequestId (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:195665:14)
+    at IpcIOSession.executeCommand (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:195674:29)
+    at IpcIOSession.onMessage (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/typescript.js:195722:68)
+    at process.<anonymous> (/google/devshell/editor/code-oss-for-cloud-shell/extensions/node_modules/typescript/lib/_tsserver.js:519:14)
+    at process.emit (node:events:524:28)
+    at emit (node:internal/child_process:950:14)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+    at Function.create (/google/devshell/editor/code-oss-for-cloud-shell/extensions/typescript-language-features/dist/extension.js:2:247857)
+    at y.dispatchResponse (/google/devshell/editor/code-oss-for-cloud-shell/extensions/typescript-language-features/dist/extension.js:2:241449)
+    at y.dispatchMessage (/google/devshell/editor/code-oss-for-cloud-shell/extensions/typescript-language-features/dist/extension.js:2:239890)
+    at ChildProcess.<anonymous> (/google/devshell/editor/code-oss-for-cloud-shell/extensions/typescript-language-features/dist/extension.js:2:239383)
+    at ChildProcess.emit (node:events:524:28)
+    at emit (node:internal/child_process:950:14)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+2025-09-03 02:08:39.911 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/0ecd4352'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.917 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/31ea8a75'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.917 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/322d0d77'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.919 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/396fdd2f'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.922 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/479c5e88'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.924 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/79412dcf'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.925 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/905622a2'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.927 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/dbaae804'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:39.933 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/ed0c8c50'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:47.220 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/cd51b5f7'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:08:52.034 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/7429baba'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:11:06.815 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/fca5b71c'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:11:12.518 [info] ExtensionService#_doActivateExtension vscode.markdown-language-features, startup: false, activationEvent: 'onLanguage:markdown'
+2025-09-03 02:11:12.733 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/.npm/_cacache/tmp/e3c3daf6'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:29:07.406 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/Drive-Health-ETL/.git/AUTO_MERGE'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:29:07.410 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/Drive-Health-ETL/.git/MERGE_HEAD'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:29:07.412 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/Drive-Health-ETL/.git/MERGE_MODE'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:29:07.416 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/Drive-Health-ETL/.git/MERGE_MSG'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 02:30:07.417 [error] EntryNotFound (FileSystemError): Error: ENOENT: no such file or directory, stat '/home/tolubada1/Drive-Health-ETL/.git/index.lock'
+    at Function.e (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:18064)
+    at Object.stat (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:16011)
+    at t.ChatViewProvider.uri [as addFileOrFolder] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:226:11)
+    at ed.value (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/ai-companion/chat/chat_view_provider.ts:211:52)
+2025-09-03 03:23:56.374 [error] Error: unauthorized.
+    at e.Authorization.authorize (/google/devshell/editor/code-oss-for-cloud-shell/extensions/cloud-shell/dist/extension.js:1:6008)
+    at Wb.resp [as h] (file:///google/devshell/editor/code-oss-for-cloud-shell/out/vs/workbench/api/node/extensionHostProcess.js:119:41516)
+    at t.CloudShellTheiaAuth.promptForOrGetAuth (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/cloudshell/authorization.ts:86:11)
+    at t.CloudShellTheiaAuth.validCache [as runAuthorization] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/cloudshell/authorization.ts:70:7)
+    at t.CloudShellAuthProvider.accessToken [as getAccessToken] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/auth/cloudshell_auth_provider.ts:39:35)
+    at c.updateExperimentationDataCache (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/experimentation/experiment_service.ts:299:11)
+    at context (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/experimentation/experiment_service.ts:290:117)
+    at c.updateExperimentationData (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/packages/experimentation/gemini_experiment_service.ts:46:35) cloudshell.authorize {"value":"google.cloud-shell","_lower":"google.cloud-shell"}
+2025-09-03 03:23:57.376 [error] Error: Error calling Cloud Shell Theia Authorization. unauthorized.
+    at t.CloudShellTheiaAuth.validCache [as runAuthorization] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/cloudshell/authorization.ts:73:13)
+    at t.CloudShellAuthProvider.accessToken [as getAccessToken] (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/auth/cloudshell_auth_provider.ts:39:35)
+    at c.updateExperimentationDataCache (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/experimentation/experiment_service.ts:299:11)
+    at context (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/common/packages/experimentation/experiment_service.ts:290:117)
+    at c.updateExperimentationData (/google/devshell/editor/code-oss-for-cloud-shell/extensions/geminicodeassist/dist/webpack:/gemini_code_assist/src/packages/experimentation/gemini_experiment_service.ts:46:35)

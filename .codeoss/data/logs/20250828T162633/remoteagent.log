@@ -1,0 +1,33 @@
+2025-08-28 16:26:33.419 [info] 
+
+
+
+
+2025-08-28 16:26:33.419 [info] Extension host agent started.
+2025-08-28 16:26:34.769 [info] [127.0.0.1][8a322da2][ManagementConnection] New connection established.
+2025-08-28 16:26:34.834 [info] [127.0.0.1][e2ee9d9d][ExtensionHostConnection] New connection established.
+2025-08-28 16:26:34.845 [info] ComputeTargetPlatform: linux-x64
+2025-08-28 16:26:35.779 [info] [127.0.0.1][e2ee9d9d][ExtensionHostConnection] <1250> Launched Extension Host Process.
+2025-08-28 16:49:16.897 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.942 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.943 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.943 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.944 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.944 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.945 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.946 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.946 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.947 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.947 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.948 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.949 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:42.949 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:43.006 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:43.006 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:43.009 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:54:43.010 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:55:42.432 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:55:42.433 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 16:55:47.668 [warning] [File Watcher (node.js)] Watcher shutdown because watched path got deleted
+2025-08-28 18:17:33.948 [info] [127.0.0.1][8a322da2][ManagementConnection] The client has reconnected.
+2025-08-28 18:17:34.037 [info] [127.0.0.1][e2ee9d9d][ExtensionHostConnection] The client has reconnected.

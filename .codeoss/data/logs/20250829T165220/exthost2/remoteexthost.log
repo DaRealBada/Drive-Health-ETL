@@ -1,0 +1,8 @@
+2025-08-29 16:53:07.879 [info] Extension host with pid 2698 started
+2025-08-29 16:53:07.974 [info] Eager extensions activated
+2025-08-29 16:53:08.503 [info] Extension host with pid 2709 started
+2025-08-29 16:53:08.590 [info] Eager extensions activated
+2025-08-29 16:58:13.546 [info] Extension host terminating: renderer disconnected for too long (2)
+2025-08-29 16:58:13.547 [info] Extension host with pid 2709 exiting with code 0
+2025-08-29 16:58:13.615 [info] Extension host terminating: renderer disconnected for too long (2)
+2025-08-29 16:58:13.616 [info] Extension host with pid 2698 exiting with code 0
