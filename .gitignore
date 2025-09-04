@@ -6,6 +6,8 @@ npm-debug.log*
 # Logs
 *.log
 _cacache/
+npm-debug.log*
+yarn-debug.log*
 
 # Cache files
 .DS_Store
@@ -22,3 +24,6 @@ gemini/
 .gitignore
 .profile
 .bash_history
+tmp/
+*.log
+*.temp

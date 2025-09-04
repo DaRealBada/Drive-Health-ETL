@@ -1,11 +1,21 @@
 // src/handler.js
-// Main Pub/Sub endpoint handler with error categorization
+// Main Pub/Sub endpoint handler with error categorization and micro-batching
 
 const { logger } = require('./logger');
 const { validateAndExtractKey } = require('./validation');
 const { processPayload } = require('./phone');
 const { evaluateSampling } = require('./sampling');
-const { writeEventToBigQuery } = require('./bq');
+const { writeEventToBigQuery, writeBatchToBigQuery } = require('./bq');
+
+// Micro-batching configuration
+const MAX_BATCH_SIZE = parseInt(process.env.MAX_BATCH_SIZE) || 1;
+const MAX_BATCH_WAIT_MS = parseInt(process.env.MAX_BATCH_WAIT_MS) || 100;
+const ENABLE_BATCHING = MAX_BATCH_SIZE > 1;
+
+// Batch state management
+let batchQueue = [];
+let batchTimer = null;
+let pendingBatchResponses = [];
 
 /**
  * Determines if an error is terminal (4xx) or transient (5xx)
@@ -42,6 +52,134 @@ function categorizeError(error) {
     statusCode: 503,
     errorType: 'transient_error'
   };
+}
+
+/**
+ * Flush the current batch to BigQuery
+ * @returns {Promise<void>}
+ */
+async function flushBatch() {
+  if (batchQueue.length === 0) return;
+  
+  const currentBatch = [...batchQueue];
+  const currentResponses = [...pendingBatchResponses];
+  
+  // Clear batch state
+  batchQueue.length = 0;
+  pendingBatchResponses.length = 0;
+  
+  if (batchTimer) {
+    clearTimeout(batchTimer);
+    batchTimer = null;
+  }
+  
+  const batchStartTime = Date.now();
+  
+  logger.info('Processing batch', {
+    batch_size: currentBatch.length,
+    max_batch_size: MAX_BATCH_SIZE,
+    wait_time_ms: MAX_BATCH_WAIT_MS
+  });
+  
+  try {
+    // Use existing writeBatchToBigQuery function
+    const writeResult = await writeBatchToBigQuery(currentBatch);
+    const batchProcessingTime = Date.now() - batchStartTime;
+    
+    // Resolve all pending responses with success
+    currentResponses.forEach(({ resolve, originalProcessingTime, logMetadata }) => {
+      resolve({
+        success: true,
+        sampled: true,
+        statusCode: 204,
+        processingTime: originalProcessingTime + batchProcessingTime,
+        logMetadata: {
+          ...logMetadata,
+          batch_size: writeResult.count,
+          batch_processing_time_ms: batchProcessingTime,
+          total_processing_time_ms: originalProcessingTime + batchProcessingTime
+        }
+      });
+    });
+    
+  } catch (error) {
+    const batchProcessingTime = Date.now() - batchStartTime;
+    const errorCategory = categorizeError(error);
+    
+    logger.error('Batch write failed', {
+      batch_size: currentBatch.length,
+      error: error.message,
+      error_type: errorCategory.errorType,
+      batch_processing_time_ms: batchProcessingTime,
+      stack: error.stack
+    });
+    
+    // Resolve all pending responses with batch error
+    currentResponses.forEach(({ resolve, originalProcessingTime, envelope, idempotencyKey }) => {
+      const errorMetadata = {
+        idempotencyKey,
+        tenant_id: envelope?.tenant_id,
+        event_type: envelope?.event_type,
+        trace_id: envelope?.trace_id,
+        error: error.message,
+        error_type: errorCategory.errorType,
+        insert_status: errorCategory.isTerminal ? 'TERMINAL_ERROR' : 'TRANSIENT_ERROR',
+        processing_time_ms: originalProcessingTime + batchProcessingTime,
+        batch_size: currentBatch.length,
+        batch_processing_time_ms: batchProcessingTime
+      };
+      
+      if (errorCategory.isTerminal) {
+        logger.warn('Terminal batch error - messages will go to DLQ', errorMetadata);
+      } else {
+        logger.error('Transient batch error - messages will be retried', {
+          ...errorMetadata,
+          stack: error.stack
+        });
+      }
+      
+      resolve({
+        success: false,
+        statusCode: errorCategory.statusCode,
+        errorType: errorCategory.errorType,
+        isTerminal: errorCategory.isTerminal,
+        error: error.message,
+        processingTime: originalProcessingTime + batchProcessingTime
+      });
+    });
+  }
+}
+
+/**
+ * Add processed message to batch queue
+ * @param {Object} envelope - The validated event envelope
+ * @param {Object} processedPayload - The normalized payload
+ * @param {string} idempotencyKey - The idempotency key
+ * @param {number} originalProcessingTime - Time spent in individual processing
+ * @param {Object} logMetadata - Original log metadata
+ * @returns {Promise<Object>} - Processing result
+ */
+async function addToBatch(envelope, processedPayload, idempotencyKey, originalProcessingTime, logMetadata) {
+  return new Promise((resolve) => {
+    // Add to batch queue
+    batchQueue.push({ envelope, processedPayload, idempotencyKey });
+    pendingBatchResponses.push({ 
+      resolve, 
+      originalProcessingTime, 
+      logMetadata, 
+      envelope, 
+      idempotencyKey 
+    });
+    
+    // Check if we should flush the batch
+    if (batchQueue.length >= MAX_BATCH_SIZE) {
+      // Flush immediately when batch is full
+      setImmediate(() => flushBatch());
+    } else if (batchQueue.length === 1 && MAX_BATCH_WAIT_MS > 0) {
+      // Start timer for first message in batch
+      batchTimer = setTimeout(() => flushBatch(), MAX_BATCH_WAIT_MS);
+    }
+  });
 }
 
 /**
@@ -84,16 +222,38 @@ async function processPubSubMessage(message) {
     // Process payload (phone normalization, etc.)
     const processedPayload = processPayload(envelope.payload);
     
-    // Write to BigQuery
-    const writeResult = await writeEventToBigQuery(envelope, processedPayload, idempotencyKey);
+    const individualProcessingTime = Date.now() - startTime;
     
-    return {
-      success: true,
-      sampled: true,
-      statusCode: 204,
-      processingTime: writeResult.processingTime,
-      logMetadata: writeResult.logMetadata
-    };
+    // Choose processing path based on batching configuration
+    if (ENABLE_BATCHING) {
+      // Create log metadata for batch context
+      const logMetadata = {
+        idempotencyKey,
+        tenant_id: envelope.tenant_id,
+        event_type: envelope.event_type,
+        trace_id: envelope.trace_id,
+        sampled: true,
+        insert_status: 'BATCHED',
+        individual_processing_time_ms: individualProcessingTime
+      };
+      
+      logger.info('Message queued for batch processing', logMetadata);
+      
+      // Add to batch and return promise that resolves when batch is processed
+      return await addToBatch(envelope, processedPayload, idempotencyKey, individualProcessingTime, logMetadata);
+      
+    } else {
+      // Original single-message processing path (unchanged)
+      const writeResult = await writeBatchToBigQuery([{ envelope, processedPayload, idempotencyKey }]);
+      
+      return {
+        success: true,
+        sampled: true,
+        statusCode: 204,
+        processingTime: writeResult.processingTime,
+        logMetadata: writeResult.logMetadata
+      };
+    }
     
   } catch (error) {
     const processingTime = Date.now() - startTime;
@@ -160,8 +320,40 @@ async function handlePubSubRequest(req, res) {
   }
 }
 
+/**
+ * Expose batch flush function for external graceful shutdown handling
+ * @returns {Promise<void>}
+ */
+async function flushPendingBatch() {
+  if (batchQueue.length > 0) {
+    logger.info('Flushing pending batch for shutdown', { 
+      pending_count: batchQueue.length 
+    });
+    await flushBatch();
+  }
+}
+
+/**
+ * Get current batch state for monitoring/debugging
+ * @returns {Object} - Current batch state
+ */
+function getBatchState() {
+  return {
+    currentBatchSize: batchQueue.length,
+    hasPendingTimer: !!batchTimer,
+    pendingResponses: pendingBatchResponses.length,
+    batchConfig: {
+      MAX_BATCH_SIZE,
+      MAX_BATCH_WAIT_MS,
+      ENABLE_BATCHING
+    }
+  };
+}
+
 module.exports = {
   processPubSubMessage,
   handlePubSubRequest,
-  categorizeError
+  categorizeError,
+  flushPendingBatch,
+  getBatchState
 };

@@ -31,7 +31,7 @@ function createBigQueryRow(envelope, processedPayload, idempotencyKey) {
     sampled: true,
     idempotency_key: idempotencyKey,
     payload: processedPayload, // FIX: Don't stringify JSON field
-    // insertId: idempotencyKey, // CRITICAL: This ensures idempotency
+    insertId: idempotencyKey, // CRITICAL: This ensures idempotency
   };
 }
 
@@ -42,61 +42,97 @@ function createBigQueryRow(envelope, processedPayload, idempotencyKey) {
  * @param {string} idempotencyKey - The idempotency key
  * @returns {Promise<Object>} - Success result with metadata
  */
-async function writeBatchToBigQuery(events) {
+async function writeEventToBigQuery(envelope, processedPayload, idempotencyKey) {
   const startTime = Date.now();
 
+  // Add this debug code to your writeBatchToBigQuery function in src/bq.js
+  // Replace the try-catch block with this enhanced version:
+
   try {
-    const rowsToInsert = events.map(({ envelope, processedPayload, idempotencyKey }) =>
+    // Log what we're trying to insert
+    console.log('=== DEBUG: BigQuery Insert Attempt ===');
+    console.log('Rows to insert:', JSON.stringify(rowsToInsert, null, 2));
+    console.log('========================================');
+
+    const [response] = await table.insert(rows, {
+      ignoreUnknownValues: false,
+      skipInvalidRows: false,
+    });
+
+    logger.info('BigQuery batch insert success', {
+      batch_size: rows.length,
+      insert_status: 'BATCH_SUCCESS',
+      processing_time_ms: Date.now() - startTime,
+    });
+
+    return { success: true, errors: [] };
+
+  } catch (error) {
+    // Enhanced error logging
+    console.log('=== DEBUG: BigQuery Error Details ===');
+    console.log('Error name:', error.name);
+    console.log('Error message:', error.message);
+    console.log('Error code:', error.code);
+
+    if (error.errors && error.errors.length > 0) {
+      console.log('Detailed errors:');
+      error.errors.forEach((err, index) => {
+        console.log(`Error ${index + 1}:`, JSON.stringify(err, null, 2));
+      });
+    }
+
+    console.log('Raw error object:', JSON.stringify(error, null, 2));
+    console.log('====================================');
+
+    // ... rest of your error handling
+  }
+}
+
+/**
+ * Write multiple events to BigQuery in batch (for future batching support)
+ * @param {Array} events - Array of {envelope, processedPayload, idempotencyKey} objects
+ * @returns {Promise<Object>} - Batch result with success/failure counts
+ */
+async function writeBatchToBigQuery(events) {
+  const startTime = Date.now();
+  
+  try {
+    const rowsToInsert = events.map(({ envelope, processedPayload, idempotencyKey }) => 
       createBigQueryRow(envelope, processedPayload, idempotencyKey)
     );
-
-    // DEBUG: Log the rows we are trying to insert
-    console.log('=== BIGQUERY INSERT ATTEMPT ===');
-    console.log('Rows to insert:', JSON.stringify(rowsToInsert, null, 2));
-    console.log('===============================');
-
+    
     await bigquery
       .dataset(BQ_DATASET)
       .table(BQ_TABLE)
       .insert(rowsToInsert);
 
     const processingTime = Date.now() - startTime;
+    
     logger.info('BigQuery batch insert success', {
       batch_size: events.length,
       processing_time_ms: processingTime,
       insert_status: 'BATCH_SUCCESS'
     });
-
-    return { success: true, count: events.length, processingTime };
-
+    
+    return {
+      success: true,
+      count: events.length,
+      processingTime
+    };
+    
   } catch (error) {
     const processingTime = Date.now() - startTime;
-
-    // Log detailed BigQuery error information
-    console.log('=== BIGQUERY BATCH INSERT FAILED ===');
-    console.log('Error message:', error.message);
-
-    // Check for specific row-level errors from BigQuery
-    if (error.errors && Array.isArray(error.errors)) {
-      console.log('Detailed row-level errors:');
-      error.errors.forEach((err, index) => {
-        console.log(`Error ${index + 1}:`, JSON.stringify(err, null, 2));
-      });
-    }
-    console.log('====================================');
-
+    
     logger.error('BigQuery batch insert failed', {
       batch_size: events.length,
       error: error.message,
       processing_time_ms: processingTime,
-      insert_status: "BATCH_ERROR"
+      insert_status: 'BATCH_ERROR'
     });
-
-    return { success: false, errors: error.errors || [error] };
+    
+    throw error;
   }
 }
-
-
 
 /**
  * Get BigQuery table information for monitoring
@@ -124,6 +160,7 @@ async function getTableInfo() {
 
 module.exports = {
   createBigQueryRow,
+  writeEventToBigQuery,
   writeBatchToBigQuery,
   getTableInfo,
   BQ_DATASET,

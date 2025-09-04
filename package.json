@@ -1,9 +1,11 @@
 {
   "name": "simple-etl",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/app.js",
+    "test": "jest",
+    "load-test": "node src/load-test.js"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.0.0",
@@ -12,9 +14,10 @@
     "libphonenumber-js": "^1.12.15",
     "winston": "^3.10.0",
     "crypto": "^1.0.1"
-
   },
   "devDependencies": {
     "jest": "^30.1.1"
   }
 }
+
+
