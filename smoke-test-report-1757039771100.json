@@ -1,0 +1,28 @@
+{
+  "testType": "Smoke Test",
+  "timestamp": "2025-09-05T02:36:11.100Z",
+  "results": {
+    "published": 3,
+    "errors": 0,
+    "startTime": 1757039770364,
+    "endTime": 1757039771099
+  },
+  "passed": true,
+  "testCases": [
+    {
+      "name": "US Phone Numbers",
+      "event_type": "call.metadata",
+      "idempotency_key": "smoke-call-1757039770362-001"
+    },
+    {
+      "name": "International Phone Numbers",
+      "event_type": "call.metadata",
+      "idempotency_key": "smoke-call-1757039770362-002"
+    },
+    {
+      "name": "Mixed Message Types",
+      "event_type": "chat.message",
+      "idempotency_key": "smoke-msg-1757039770362-003"
+    }
+  ]
+}

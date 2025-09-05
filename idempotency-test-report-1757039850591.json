@@ -1,0 +1,37 @@
+{
+  "testType": "Idempotency Test",
+  "timestamp": "2025-09-05T02:37:30.591Z",
+  "configuration": {
+    "topic": "phone-call-metadata",
+    "duplicateCount": 5
+  },
+  "results": {
+    "totalPublished": 15,
+    "totalErrors": 0,
+    "durationSeconds": 3.87,
+    "testCases": [
+      {
+        "name": "Call ID Idempotency",
+        "idempotencyKey": "call-idem-1757039786717-001",
+        "published": 5,
+        "errors": 0,
+        "duplicateCount": 5
+      },
+      {
+        "name": "Message ID Idempotency",
+        "idempotencyKey": "msg-idem-1757039786717-002",
+        "published": 5,
+        "errors": 0,
+        "duplicateCount": 5
+      },
+      {
+        "name": "Trace ID Fallback Idempotency",
+        "idempotencyKey": "trace-idem-1757039786717-003",
+        "published": 5,
+        "errors": 0,
+        "duplicateCount": 5
+      }
+    ]
+  },
+  "passed": true
+}
