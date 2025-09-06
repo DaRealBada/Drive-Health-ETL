@@ -2,7 +2,7 @@
 const { validateEnvelope, computeIdempotencyKey } = require('./validation.js');
 const { shouldSample } = require('./sampling.js');
 const { normalizePhone } = require('./phone.js');
-const { app } = require('./app.js');
+const app = require('./app.js');
 
 describe('validateEnvelope', () => {
   const validEnvelope = {
@@ -81,24 +81,11 @@ describe('shouldSample', () => {
 });
 
 // Server integration tests
-describe('Server Integration', () => {
-  let server;
-
-  beforeAll((done) => {
-    // Use port 0 to let the system assign an available port
-    server = app.listen(0, done);
-  }, 10000); // Increase timeout to 10 seconds
-
-  afterAll((done) => {
-    if (server) {
-      server.close(done);
-    } else {
-      done();
-    }
-  });
-
+describe('Server Health Check', () => {
+  // fix: No need for beforeAll/afterAll. Supertest handles the server.
   test('should respond to health check', async () => {
     const request = require('supertest');
+    // fix: Pass the imported 'app' directly to supertest.
     const response = await request(app).get('/');
     expect(response.status).toBe(200);
     expect(response.text).toBe('DriveHealth ETL Service is running!');

@@ -1,5 +1,5 @@
 // src/bq.js
-// BigQuery write operations with idempotency
+// BigQuery write operations with idempotency and JSON payload
 
 const { BigQuery } = require('@google-cloud/bigquery');
 const { logger } = require('./logger');
@@ -9,7 +9,6 @@ const bigquery = new BigQuery();
 // Configuration from environment variables
 const BQ_DATASET = process.env.BQ_DATASET || 'drivehealth_dw';
 const BQ_TABLE = process.env.BQ_TABLE || 'events';
-const PARTITION_TTL_DAYS = parseInt(process.env.PARTITION_TTL_DAYS) || 365;
 
 /**
  * Create a BigQuery row object from envelope and processed payload
@@ -18,48 +17,35 @@ const PARTITION_TTL_DAYS = parseInt(process.env.PARTITION_TTL_DAYS) || 365;
  * @param {string} idempotencyKey - The idempotency key
  * @returns {Object} - BigQuery row object
  */
-
 function createBigQueryRow(envelope, processedPayload, idempotencyKey) {
   return {
     tenant_id: envelope.tenant_id,
     event_type: envelope.event_type,
     schema_version: envelope.schema_version,
     envelope_version: envelope.envelope_version,
-    trace_id: envelope.trace_id || null, // FIX: Handle missing trace_id
+    trace_id: envelope.trace_id || null,
     occurred_at: envelope.occurred_at,
     received_at: new Date().toISOString(),
     source: envelope.source || 'unknown',
     sampled: true,
-    idempotency_key: idempotencyKey,
-    payload: processedPayload, // FIX: Don't stringify JSON field
+    idempotencyKey: idempotencyKey,
+    payload: processedPayload,
   };
 }
 
 /**
- * Write a single event to BigQuery with idempotency
- * @param {Object} envelope - The validated event envelope
- * @param {Object} processedPayload - The normalized payload
- * @param {string} idempotencyKey - The idempotency key
+ * Write events to BigQuery in batch with idempotency
+ * @param {Array} events - Array of {envelope, processedPayload, idempotencyKey} objects
  * @returns {Promise<Object>} - Success result with metadata
  */
 async function writeBatchToBigQuery(events) {
   const startTime = Date.now();
 
   try {
-    // Create just the row data (no insertId in the data)
-    const rowsToInsert = events.map(({ envelope, processedPayload, idempotencyKey }) =>
-      createBigQueryRow(envelope, processedPayload, idempotencyKey)
-    );
-
-    console.log('=== BIGQUERY INSERT ATTEMPT ===');
-    console.log('Rows to insert:', JSON.stringify(rowsToInsert, null, 2));
-    console.log('===============================');
-
-    // Use the raw property to pass insertId correctly
     const insertOptions = {
-      raw: true, // Use raw mode for proper insertId handling
+      raw: true,
       rows: events.map(({ envelope, processedPayload, idempotencyKey }) => ({
-        insertId: idempotencyKey, // This is the proper way to set insertId
+        insertId: idempotencyKey,
         json: createBigQueryRow(envelope, processedPayload, idempotencyKey)
       }))
     };
@@ -70,102 +56,56 @@ async function writeBatchToBigQuery(events) {
       .insert(insertOptions.rows, { raw: true });
 
     const processingTime = Date.now() - startTime;
-    logger.info('BigQuery batch insert success', {
+    const logMetadata = {
       batch_size: events.length,
       processing_time_ms: processingTime,
       insert_status: 'BATCH_SUCCESS'
-    });
+    };
+    
+    logger.info('BigQuery batch insert success', logMetadata);
 
-    return { success: true, count: events.length, processingTime };
+    // fix: The 'logMetadata' object is now correctly included in the return value.
+    return { 
+      success: true, 
+      count: events.length, 
+      processingTime,
+      logMetadata: logMetadata 
+    };
 
   } catch (error) {
+    // ... (the catch block remains unchanged)
     const processingTime = Date.now() - startTime;
 
-    console.log('=== BIGQUERY BATCH INSERT FAILED ===');
-    console.log('Error message:', error.message);
+    if (error.errors && error.errors.length > 0) {
+      const failedRowCount = error.errors.length;
+      const successRowCount = events.length - failedRowCount;
 
-    if (error.errors && Array.isArray(error.errors)) {
-      console.log('Detailed row-level errors:');
-      error.errors.forEach((err, index) => {
-        console.log(`Error ${index + 1}:`, JSON.stringify(err, null, 2));
+      logger.error('BigQuery batch insert partial failure', {
+        batch_size: events.length,
+        success_count: successRowCount,
+        failure_count: failedRowCount,
+        processing_time_ms: processingTime,
+        insert_status: "BATCH_PARTIAL_FAILURE",
+        sample_errors: error.errors.slice(0, 3).map(err => ({
+            index: err.index,
+            reason: err.errors[0]?.reason,
+            idempotencyKey: events[err.index]?.idempotencyKey
+        }))
+      });
+    } else {
+      logger.error('BigQuery batch insert failed', {
+        batch_size: events.length,
+        error: error.message,
+        error_code: error.code,
+        processing_time_ms: processingTime,
+        insert_status: "BATCH_ERROR",
+        sample_keys: events.slice(0, 3).map(e => e.idempotencyKey)
       });
     }
-    console.log('====================================');
-
-    logger.error('BigQuery batch insert failed', {
-      batch_size: events.length,
-      error: error.message,
-      processing_time_ms: processingTime,
-      insert_status: "BATCH_ERROR"
-    });
-
     return { success: false, errors: error.errors || [error] };
   }
 }
 
-/**
- * Ensures the BigQuery table exists with the correct schema, partitioning, and clustering.
- */
-async function ensureTable() {
-  const table = bigquery.dataset(BQ_DATASET).table(BQ_TABLE);
-
-  try {
-    await table.get();
-    console.log(`Table ${BQ_DATASET}.${BQ_TABLE} already exists.`);
-  } catch (error) {
-    if (error.code === 404) {
-      console.log(`Table ${BQ_DATASET}.${BQ_TABLE} not found. Creating table...`);
-
-      const schema = [
-        { name: 'tenant_id', type: 'STRING', mode: 'NULLABLE' },
-        { name: 'event_type', type: 'STRING', mode: 'NULLABLE' },
-        { name: 'schema_version', type: 'INTEGER', mode: 'NULLABLE' },
-        { name: 'envelope_version', type: 'INTEGER', mode: 'NULLABLE' },
-        { name: 'trace_id', type: 'STRING', mode: 'NULLABLE' },
-        { name: 'occurred_at', type: 'TIMESTAMP', mode: 'NULLABLE' },
-        { name: 'received_at', type: 'TIMESTAMP', mode: 'NULLABLE' },
-        { name: 'source', type: 'STRING', mode: 'NULLABLE' },
-        { name: 'sampled', type: 'BOOLEAN', mode: 'NULLABLE' },
-        { name: 'idempotency_key', type: 'STRING', mode: 'NULLABLE' },
-        {
-          name: 'payload',
-          type: 'RECORD',
-          mode: 'NULLABLE',
-          fields: [
-            { name: 'call_id', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'caller', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'callee', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'duration', type: 'INTEGER', mode: 'NULLABLE' },
-            { name: 'status', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'message_id', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'from_phone', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'to_phone', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'channel', type: 'STRING', mode: 'NULLABLE' },
-            { name: 'text_length', type: 'INTEGER', mode: 'NULLABLE' },
-            { name: 'metadata', type: 'JSON', mode: 'NULLABLE' }
-          ],
-        },
-      ];
-
-      const options = {
-        schema: schema,
-        timePartitioning: {
-          type: 'DAY',
-          field: 'occurred_at',
-          expirationMs: PARTITION_TTL_DAYS * 24 * 60 * 60 * 1000,
-        },
-        clustering: { fields: ['tenant_id', 'event_type'] },
-      };
-
-      await bigquery
-        .dataset(BQ_DATASET)
-        .createTable(BQ_TABLE, options);
-      console.log(`Table ${BQ_DATASET}.${BQ_TABLE} created successfully.`);
-    } else {
-      throw error;
-    }
-  }
-}
 
 /**
  * Get BigQuery table information for monitoring
@@ -195,7 +135,6 @@ module.exports = {
   createBigQueryRow,
   writeBatchToBigQuery,
   getTableInfo,
-  ensureTable,
   BQ_DATASET,
   BQ_TABLE
 };
