@@ -21,15 +21,16 @@ function createBigQueryRow(envelope, processedPayload, idempotencyKey) {
   return {
     tenant_id: envelope.tenant_id,
     event_type: envelope.event_type,
-    schema_version: envelope.schema_version,
-    envelope_version: envelope.envelope_version,
+    schema_version: parseInt(envelope.schema_version, 10),
+    envelope_version: parseInt(envelope.envelope_version, 10),
     trace_id: envelope.trace_id || null,
     occurred_at: envelope.occurred_at,
     received_at: new Date().toISOString(),
     source: envelope.source || 'unknown',
     sampled: true,
     idempotencyKey: idempotencyKey,
-    payload: processedPayload,
+    // fix: Stringify the payload to match the requirement for JSON column types.
+    payload: JSON.stringify(processedPayload),
   };
 }
 
@@ -64,7 +65,6 @@ async function writeBatchToBigQuery(events) {
     
     logger.info('BigQuery batch insert success', logMetadata);
 
-    // fix: The 'logMetadata' object is now correctly included in the return value.
     return { 
       success: true, 
       count: events.length, 
@@ -73,8 +73,10 @@ async function writeBatchToBigQuery(events) {
     };
 
   } catch (error) {
-    // ... (the catch block remains unchanged)
     const processingTime = Date.now() - startTime;
+
+    // fix: Add temporary, detailed logging for the raw error object.
+    console.log("RAW BIGQUERY ERROR:", JSON.stringify(error, null, 2));
 
     if (error.errors && error.errors.length > 0) {
       const failedRowCount = error.errors.length;

@@ -1,3 +1,5 @@
+// src/index.js
+
 // Use the v1 clients for direct API calls
 const { v1 } = require('@google-cloud/pubsub');
 
@@ -43,7 +45,8 @@ async function main() {
     if (message.attributes && message.attributes.replayAttempt) {
       // This message failed after a replay, send it to the parking lot
       console.log('Detected a stubborn message, sending to parking lot.');
-      message.attributes.dlqReason = 'Failed after replay attempt';
+      // fix: Changed attribute name from 'dlqReason' to 'reason' for standardization.
+      message.attributes.reason = 'Failed after replay attempt';
       delete message.attributes.replayAttempt;
       messagesToPark.push(message);
     } else {

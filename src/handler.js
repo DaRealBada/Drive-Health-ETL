@@ -8,14 +8,20 @@ const { evaluateSampling } = require('./sampling');
 const { writeBatchToBigQuery } = require('./bq');
 const { queueForBatch, flushPendingBatch, getBatchState } = require('./batchProcessor');
 
-// fix: Configuration is now read from the environment here to allow for test overrides.
 const MAX_BATCH_SIZE = parseInt(process.env.MAX_BATCH_SIZE) || 1;
 
 /**
  * Determines if a pre-processing error is terminal (4xx) or transient (5xx).
  */
 function categorizeError(error) {
-  const message = error.message.toLowerCase();
+  // fix: Add a check for the specific PartialFailureError from BigQuery.
+  if (error.name === 'PartialFailureError') {
+    return { isTerminal: false, statusCode: 503, errorType: 'transient_error' };
+  }
+
+  // Ensure error.message exists before trying to read it.
+  const message = error.message ? error.message.toLowerCase() : '';
+
   if (error instanceof SyntaxError || message.includes('invalid json') || message.includes('malformed envelope')) {
     return { isTerminal: true, statusCode: 422, errorType: 'format_error' };
   }
@@ -46,7 +52,7 @@ async function processPubSubMessage(message) {
       logger.info('Event sampled out', {
         idempotencyKey: idempotencyKey,
         tenant_id: envelope.tenant_id,
-        sampled: false // Explicitly state it was not sampled for processing
+        sampled: false
       });
       return { success: true, sampled: false, statusCode: 204, processingTime: Date.now() - startTime };
     }
@@ -80,12 +86,14 @@ async function processPubSubMessage(message) {
   } catch (error) {
     const processingTime = Date.now() - startTime;
     const errorCategory = categorizeError(error);
+    const errorMessage = error.message || 'Batch insert failed with partial failures.';
+    
     const errorMetadata = {
       idempotencyKey: idempotencyKey,
       tenant_id: envelope?.tenant_id,
       event_type: envelope?.event_type,
       trace_id: envelope?.trace_id,
-      error: error.message,
+      error: errorMessage,
       error_type: errorCategory.errorType,
       insert_status: errorCategory.isTerminal ? 'TERMINAL_ERROR' : 'TRANSIENT_ERROR',
       processing_time_ms: processingTime
@@ -96,7 +104,7 @@ async function processPubSubMessage(message) {
     } else {
       logger.error('Transient error - message will be retried', errorMetadata);
     }
-    return { success: false, ...errorCategory, error: error.message, processingTime };
+    return { success: false, ...errorCategory, error: errorMessage, processingTime };
   }
 }
 

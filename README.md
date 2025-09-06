@@ -16,6 +16,20 @@ bq --location=US mk --dataset \
 your-gcp-project-id:drivehealth_dw
 ````
 
+### 2\. Create the BigQuery Table
+
+Once the dataset is created, you must create the `events` table with the correct schema, partitioning, and clustering. This command also sets a partition expiration of 365 days.
+
+```sh
+bq mk --table \
+--time_partitioning_field occurred_at \
+--time_partitioning_expiration 31536000 \
+--clustering_fields tenant_id,event_type \
+--description "Table for all incoming ETL events" \
+your-gcp-project-id:drivehealth_dw.events \
+tenant_id:STRING,event_type:STRING,schema_version:STRING,envelope_version:STRING,trace_id:STRING,occurred_at:TIMESTAMP,received_at:TIMESTAMP,source:STRING,sampled:BOOLEAN,idempotencyKey:STRING,payload:JSON
+```
+
 ## Infrastructure Setup
 
 This service relies on specific Pub/Sub and Cloud Run configurations.
@@ -92,30 +106,31 @@ A single message follows a clearly defined path from ingestion to storage:
 
 All incoming messages must conform to the following JSON envelope structure:
 
-| Field              | Type   | Required | Description                                                               |
-| ------------------ | ------ | -------- | ------------------------------------------------------------------------- |
-| `envelope_version` | number | Yes      | The version of the envelope schema.                                       |
-| `event_type`       | string | Yes      | The type of event (e.g., "call.metadata").                                |
-| `schema_version`   | number | Yes      | The version of the payload schema.                                        |
-| `tenant_id`        | string | Yes      | The identifier for the customer/tenant.                                   |
-| `occurred_at`      | string | Yes      | ISO 8601 timestamp of when the event occurred.                            |
-| `trace_id`         | string | No       | Unique ID to trace the request. Fallback for the idempotency key.         |
-| `source`           | string | No       | The system that originated the event.                                     |
-| `payload`          | object | Yes      | The core data of the event. Must contain a `call_id` or `message_id`. |
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `envelope_version` | number | Yes | The version of the envelope schema. |
+| `event_type` | string | Yes | The type of event (e.g., "call.metadata"). |
+| `schema_version` | number | Yes | The version of the payload schema. |
+| `tenant_id` | string | Yes | The identifier for the customer/tenant. |
+| `occurred_at` | string | Yes | ISO 8601 timestamp of when the event occurred. |
+| `trace_id` | string | No | Unique ID to trace the request. Fallback for the idempotency key. |
+| `source` | string | No | The system that originated the event. |
+| `payload` | object | Yes | The core data of the event. Must contain a `call_id` or `message_id`. |
 
 ## Environment Variables
 
 The service can be configured using these environment variables:
 
-| Variable               | Description                                                        | Default                         |
-| ---------------------- | ------------------------------------------------------------------ | ------------------------------- |
-| `PORT`                 | The port the service will listen on.                               | `8080`                          |
-| `LOG_LEVEL`            | The logging level (e.g., 'info', 'warn', 'error').                 | `info`                          |
-| `AUDIT_RATE`           | The deterministic sampling rate (0.0 to 1.0) for auditing.         | `1.0`                           |
-| `DEFAULT_PHONE_REGION` | The default two-letter country code for E.164 phone number parsing.| `US`                            |
-| `MAX_BATCH_SIZE`       | The number of messages to buffer before flushing to BigQuery.      | `1`                             |
-| `MAX_BATCH_WAIT_MS`    | The time in milliseconds to wait before flushing a batch.          | `100`                           |
-| `BQ_DATASET`           | The BigQuery dataset to use.                                       | `drivehealth_dw`                |
-| `BQ_TABLE`             | The BigQuery table to use.                                         | `events`                        |
-| `DLQ_SUBSCRIPTION`     | The name of the Dead Letter Queue subscription.                    | `call-audits-dlq-sub`           |
-| `MAIN_TOPIC`           | The name of the main Pub/Sub topic.                                | `phone-call-metadata`           |
+| Variable | Description | Default |
+| :--- | :--- | :--- |
+| `PORT` | The port the service will listen on. | `8080` |
+| `LOG_LEVEL` | The logging level (e.g., 'info', 'warn', 'error'). | `info` |
+| `AUDIT_RATE` | The deterministic sampling rate (0.0 to 1.0) for auditing. | `1.0` |
+| `DEFAULT_PHONE_REGION` | The default two-letter country code for E.164 phone number parsing. | `US` |
+| `MAX_BATCH_SIZE` | The number of messages to buffer before flushing to BigQuery. | `1` |
+| `MAX_BATCH_WAIT_MS` | The time in milliseconds to wait before flushing a batch. | `100` |
+| `BQ_DATASET` | The BigQuery dataset to use. | `drivehealth_dw` |
+| `BQ_TABLE` | The BigQuery table to use. | `events` |
+| `DLQ_SUBSCRIPTION` | The name of the Dead Letter Queue subscription. | `call-audits-dlq-sub`|
+| `MAIN_TOPIC` | The name of the main Pub/Sub topic. | `phone-call-metadata`|
+| `PARKING_LOT_TOPIC` | The name of the parking-lot Pub/Sub topic for unrecoverable messages. | `phone-call-metadata-parking-lot`|
