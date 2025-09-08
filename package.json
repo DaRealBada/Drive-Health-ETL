@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "jest",
-    "load-test": "node src/load-test.js"
+    "load-test": "node src/load-test.js",
+    "replay": "node src/replay-dlq-job.js"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.0.0",
