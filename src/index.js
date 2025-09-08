@@ -1,104 +1,156 @@
 // src/index.js
+// Robust DLQ replay job with proper error handling and message reconstruction
 
-// Use the v1 clients for direct API calls
 const { v1 } = require('@google-cloud/pubsub');
-
-// Create clients for both subscribing (reading) and publishing (writing)
 const subscriberClient = new v1.SubscriberClient();
 const publisherClient = new v1.PublisherClient();
 
-// Configuration from environment variables
+// --- Configuration ---
 const DLQ_SUBSCRIPTION_NAME = process.env.DLQ_SUBSCRIPTION || 'call-audits-dlq-sub';
 const MAIN_TOPIC_ID = process.env.MAIN_TOPIC || 'phone-call-metadata';
 const PARKING_LOT_TOPIC_ID = process.env.PARKING_LOT_TOPIC || 'phone-call-metadata-parking-lot';
 const BATCH_SIZE = parseInt(process.env.BATCH_SIZE) || 10;
 const REPLAY_DELAY_MS = parseInt(process.env.REPLAY_DELAY_MS) || 200;
+const MAX_REPLAY_ATTEMPTS = parseInt(process.env.MAX_REPLAY_ATTEMPTS) || 3;
+const MAX_PULLS = parseInt(process.env.MAX_PULLS) || 100; // Safety cap to prevent infinite loops
 
+/**
+ * Safely reconstruct a message for republishing.
+ * This is a pure function that prepares a message for its next destination.
+ */
+function reconstructMessage(receivedMessage, isParking = false) {
+  const { message } = receivedMessage;
+  const currentAttempts = parseInt(message.attributes?.['x-replay-attempts'] || '0');
+  const newAttemptCount = currentAttempts + 1;
+
+  // Reconstruct the core message with data as a Buffer
+  const reconstructed = {
+    data: Buffer.from(message.data, 'base64'),
+    attributes: {
+      // Copy existing attributes, filtering out internal and old tracking attributes
+      ...Object.fromEntries(
+        Object.entries(message.attributes || {}).filter(([key]) => 
+          !key.startsWith('googclient_') && key !== 'x-replay-attempts'
+        )
+      ),
+      'x-original-message-id': message.messageId || 'unknown',
+      'x-replay-timestamp': new Date().toISOString(),
+    }
+  };
+
+  // Add specific attributes based on whether we are parking or replaying
+  if (isParking) {
+    reconstructed.attributes['x-parked-reason'] = `Exceeded max replay attempts (${MAX_REPLAY_ATTEMPTS})`;
+    reconstructed.attributes['x-final-attempt-count'] = newAttemptCount.toString();
+  } else {
+    reconstructed.attributes['x-replay-attempts'] = newAttemptCount.toString();
+  }
+
+  if (message.orderingKey) {
+    reconstructed.orderingKey = message.orderingKey;
+  }
+
+  return reconstructed;
+}
+
+/**
+ * Pull and process a single batch of messages from the DLQ.
+ */
+async function pullAndProcessBatch(formattedSubscription, formattedTopic, formattedParkingLotTopic) {
+  const [response] = await subscriberClient.pull({
+    subscription: formattedSubscription,
+    maxMessages: BATCH_SIZE,
+  });
+
+  const messages = response.receivedMessages;
+  if (!messages || messages.length === 0) {
+    return { messagesFound: 0, shouldContinue: false };
+  }
+
+  console.log(`Pulled ${messages.length} messages to process.`);
+  
+  const successfulAckIds = [];
+  
+  for (const receivedMessage of messages) {
+    try {
+      const currentAttempts = parseInt(receivedMessage.message.attributes?.['x-replay-attempts'] || '0');
+      let messageToPublish;
+      let targetTopic;
+      let action;
+
+      if (currentAttempts >= MAX_REPLAY_ATTEMPTS) {
+        // Time to park the message
+        console.log(`Message ${receivedMessage.message.messageId} exceeded max attempts, parking...`);
+        messageToPublish = reconstructMessage(receivedMessage, true);
+        targetTopic = formattedParkingLotTopic;
+        action = 'parked';
+      } else {
+        // Re-attempt to publish to the main topic
+        messageToPublish = reconstructMessage(receivedMessage, false);
+        targetTopic = formattedTopic;
+        action = 'republished';
+      }
+
+      await publisherClient.publish({ topic: targetTopic, messages: [messageToPublish] });
+      console.log(` ✓ Message ${receivedMessage.message.messageId} successfully ${action}.`);
+      
+      // Add this message's ackId to the list of successful ones for this batch
+      successfulAckIds.push(receivedMessage.ackId);
+
+      if (REPLAY_DELAY_MS > 0) {
+        await new Promise(resolve => setTimeout(resolve, REPLAY_DELAY_MS));
+      }
+
+    } catch (error) {
+      console.error(` ✗ Failed to process message ${receivedMessage.message.messageId}. It will not be acknowledged.`, error);
+    }
+  }
+
+  // Acknowledge all successfully processed messages from this batch at once
+  if (successfulAckIds.length > 0) {
+    await subscriberClient.acknowledge({ subscription: formattedSubscription, ackIds: successfulAckIds });
+    console.log(`Acknowledged ${successfulAckIds.length} successfully processed messages.`);
+  }
+
+  return { messagesFound: messages.length, shouldContinue: true };
+}
+
+/**
+ * Main DLQ replay function.
+ */
 async function main() {
   console.log(`Starting DLQ replay job for subscription: ${DLQ_SUBSCRIPTION_NAME}`);
-
+  
   const projectId = await subscriberClient.getProjectId();
-
   const formattedSubscription = `projects/${projectId}/subscriptions/${DLQ_SUBSCRIPTION_NAME}`;
   const formattedTopic = `projects/${projectId}/topics/${MAIN_TOPIC_ID}`;
   const formattedParkingLotTopic = `projects/${projectId}/topics/${PARKING_LOT_TOPIC_ID}`;
 
-  // 1. Pull messages from the DLQ
-  const pullRequest = {
-    subscription: formattedSubscription,
-    maxMessages: BATCH_SIZE,
-  };
-  const [response] = await subscriberClient.pull(pullRequest);
-  const messages = response.receivedMessages;
-
-  if (!messages || messages.length === 0) {
-    console.log('No messages in DLQ to replay.');
-    return;
-  }
-
-  console.log(`Found ${messages.length} messages to process.`);
-  const ackIds = [];
-  const messagesToRepublish = [];
-  const messagesToPark = [];
-
-  for (const { message, ackId } of messages) {
-    if (message.attributes && message.attributes.replayAttempt) {
-      // This message failed after a replay, send it to the parking lot
-      console.log('Detected a stubborn message, sending to parking lot.');
-      // fix: Changed attribute name from 'dlqReason' to 'reason' for standardization.
-      message.attributes.reason = 'Failed after replay attempt';
-      delete message.attributes.replayAttempt;
-      messagesToPark.push(message);
-    } else {
-      // This is the first time replaying this message. Tag and republish.
-      if (!message.attributes) {
-        message.attributes = {};
-      }
-      message.attributes.replayAttempt = '1';
-      messagesToRepublish.push(message);
-    }
-    ackIds.push(ackId);
-  }
-
-  // 2. Republish the messages to the main topic with throttling
-  if (messagesToRepublish.length > 0) {
-    console.log(`Re-publishing ${messagesToRepublish.length} messages to ${MAIN_TOPIC_ID}...`);
-    for (const message of messagesToRepublish) {
-      const publishRequest = {
-        topic: formattedTopic,
-        messages: [message],
-      };
-      await publisherClient.publish(publishRequest);
-      console.log(`- Republished message to main topic.`);
-      // Add a small delay to throttle the replay rate
-      await new Promise(resolve => setTimeout(resolve, REPLAY_DELAY_MS));
+  let pullCount = 0;
+  while (pullCount < MAX_PULLS) {
+    console.log(`\n--- Pull attempt ${pullCount + 1} of ${MAX_PULLS} ---`);
+    const { messagesFound, shouldContinue } = await pullAndProcessBatch(
+      formattedSubscription,
+      formattedTopic,
+      formattedParkingLotTopic
+    );
+    pullCount++;
+    if (!shouldContinue) {
+      console.log('DLQ is empty. Replay job complete.');
+      break;
     }
   }
-  
-  // 3. Publish stubborn messages to the parking-lot topic
-  if (messagesToPark.length > 0) {
-    const parkRequest = {
-      topic: formattedParkingLotTopic,
-      messages: messagesToPark,
-    };
-    await publisherClient.publish(parkRequest);
-    console.log(`Parked ${messagesToPark.length} messages in ${PARKING_LOT_TOPIC_ID}.`);
-  }
-  
-  // 4. Acknowledge the messages on the DLQ to remove them
-  if (ackIds.length > 0) {
-    const ackRequest = {
-      subscription: formattedSubscription,
-      ackIds: ackIds,
-    };
-    await subscriberClient.acknowledge(ackRequest);
-    console.log(`Acknowledged ${ackIds.length} messages from the DLQ.`);
+
+  if (pullCount >= MAX_PULLS) {
+    console.warn(`⚠️ Reached maximum pull limit (${MAX_PULLS}). DLQ may still contain messages.`);
   }
 }
 
-main().catch(e => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch(e => {
+    console.error('An unhandled error occurred in the main process:', e);
+    process.exit(1);
+  });
+}
 
 module.exports = { main };
