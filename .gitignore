@@ -17,6 +17,8 @@ yarn-debug.log*
 
 # Gemini and LLM related
 .gemini/
+.ai_documentation
+
 
 # Cloud Shell related
 .bashrc
